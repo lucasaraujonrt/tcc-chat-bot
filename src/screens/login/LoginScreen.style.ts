@@ -1,21 +1,26 @@
 import styled from 'styled-components/native';
 import { color, font } from '../../config/theme.json';
 import * as Window from '../../services/dimensionsService';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   bold?: boolean,
   link?: boolean,
 };
 
-export const Container = styled.View`
+export const Container = styled(KeyboardAwareScrollView)`
   flex: 1;
   background-color: ${color.primary};
   flex-direction: column;
+`;
+
+export const WrapperContainer = styled.View`
   justify-content: flex-end;
 `;
 
 export const WrapperLogo = styled.View`
   width: ${Window.widthScale(1)}px;
+  height: ${Window.heightScale(0.35)}px;
   justify-content: center;
   align-items: center;
 `;
@@ -43,6 +48,7 @@ export const WrapperForm = styled.View`
   align-self: center;
   flex-direction: column;
   justify-content: center;
+  padding-bottom: ${Window.heightScale(0.02)}px;
 `;
 
 export const WrapperLink = styled.TouchableOpacity.attrs({

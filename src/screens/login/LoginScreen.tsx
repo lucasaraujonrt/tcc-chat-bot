@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../../components/button/Button';
 import Input from '../../components/input/Input';
-import KeyboardAvoiding from '../../components/keyboard-avoiding/KeyboardAvoiding';
 import { InputType } from '../../enum/inputType';
 import * as S from './LoginScreen.style';
 
@@ -12,11 +11,12 @@ const Login: React.FC = () => {
   return (
     <>
       <S.Container>
+        <S.WrapperContainer>
+
           <S.WrapperLogo>
             <S.TextLogo link>Logo aqui</S.TextLogo>
           </S.WrapperLogo>
           <S.SubContainer>
-          <KeyboardAvoiding>
             <S.TextLogo bold>Seja bem vindo!</S.TextLogo>
               <S.WrapperForm>
                 <Input 
@@ -38,18 +38,19 @@ const Login: React.FC = () => {
                   keyboardType="default"
                   maxLength={120}
                 />
-              </S.WrapperForm>
               <S.WrapperLink onPress={() => console.log('apertei')}>
-              <S.TextLogo link>Esqueci minha senha</S.TextLogo>
+                <S.TextLogo link>Esqueci minha senha</S.TextLogo>
               </S.WrapperLink>
               <Button 
                 title="Entrar"
                 onPress={()=> console.log('aaaaaaaaaaa')}
                 width={0.5}
-                // disabled
-                />
-                </KeyboardAvoiding>
+                disabled
+              />
+              </S.WrapperForm>
             </S.SubContainer>
+        </S.WrapperContainer>
+
       </S.Container>
     </>
   );
