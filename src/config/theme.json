@@ -11,7 +11,10 @@
     "cream": "#F9F1F0"
   },
   "font": {
-    "regular": "Lexend Deca-Regular",
-    "medium": "Lexend Deca-Medium"
+    "regular": "Lexend-Regular",
+    "medium": "Lexend-Medium",
+    "bold": "Lexend-Bold",
+    "semiBold": "Lexend-SemiBold",
+    "extraBold": "Lexend-ExtraBold"
   }
 }

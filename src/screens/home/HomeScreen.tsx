@@ -7,17 +7,7 @@ import * as S from './HomeScreen.style';
 const Home: React.FC = () => {
   return (
     <S.Container>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
-      <Text>Julia gostosa</Text>
+      
     </S.Container>
   );
 }

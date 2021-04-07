@@ -7,7 +7,15 @@
     "resolveJsonModule": true,
     "jsx": "react-native",
     "isolatedModules": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "lint": {
+          "validProperties": "shadow-color,shadow-opacity,shadow-offset,padding-vertical,padding-horizontal,margin-vertical,margin-horizontal"
+        }
+      }
+    ]
   },
   "exclude": [
     "node_modules",

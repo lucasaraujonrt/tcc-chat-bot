@@ -2,15 +2,17 @@ import React, { ReactElement } from 'react';
 
 import { createStack } from './services/navigationService';
 import Home from './screens/home';
+import LoginScreen from './screens/login';
 
 const MainStack = createStack();
 const ContentStack = createStack();
+const StartStack = createStack();
 
 const routeList: Array<{name: string, component: ReactElement}> = [
     {
       name: 'home',
       component: <ContentStack.Screen name="home" component={Home}/>
-    }
+    },
 ];
 
 
@@ -21,8 +23,16 @@ const ContentNavigator = () => (
 );
 
 
+const StartNavigator = () => (
+  <StartStack.Navigator screenOptions={{ headerShown: false }}>
+    <StartStack.Screen name="login" component={LoginScreen} />
+  </StartStack.Navigator>
+);
+
+
 const AppNavigator = () => (
-  <MainStack.Navigator initialRouteName="Content" screenOptions={{ headerShown: false }}>
+  <MainStack.Navigator initialRouteName="Start" screenOptions={{ headerShown: false }}>
+    <MainStack.Screen name='Start' component={StartNavigator} />
     <MainStack.Screen name="Content" component={ContentNavigator} />
   </MainStack.Navigator>
 );
