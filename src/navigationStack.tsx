@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { createStack } from './services/navigationService';
 import Home from './screens/home';
 import LoginScreen from './screens/login';
+import ForgotPassword from './screens/forgot-password';
 
 const MainStack = createStack();
 const ContentStack = createStack();
@@ -26,6 +27,7 @@ const ContentNavigator = () => (
 const StartNavigator = () => (
   <StartStack.Navigator screenOptions={{ headerShown: false }}>
     <StartStack.Screen name="login" component={LoginScreen} />
+    <StartStack.Screen name="forgot" component={ForgotPassword} />
   </StartStack.Navigator>
 );
 

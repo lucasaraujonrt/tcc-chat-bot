@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../components/button/Button';
 import Input from '../../components/input/Input';
 import { InputType } from '../../enum/inputType';
+import navigationService from '../../services/navigationService';
 import * as S from './LoginScreen.style';
 
 const Login: React.FC = () => {
@@ -38,7 +39,7 @@ const Login: React.FC = () => {
                   keyboardType="default"
                   maxLength={120}
                 />
-              <S.WrapperLink onPress={() => console.log('apertei')}>
+              <S.WrapperLink onPress={() => navigationService.navigate('forgot')}>
                 <S.TextLogo link>Esqueci minha senha</S.TextLogo>
               </S.WrapperLink>
               <Button 

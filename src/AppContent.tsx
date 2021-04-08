@@ -11,8 +11,8 @@ class AppContent extends Component {
   render(){
     return(
       <>
-        <StatusBar translucent barStyle="light-content" animated backgroundColor={color.primary}/>
-        <KeyboardAvoidingView style={{ flex: 1, marginTop: Dimensions.heightScale(0.04) }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <StatusBar barStyle="light-content" animated backgroundColor={color.primary}/>
+        <KeyboardAvoidingView style={{ flex: 1, paddingTop: Dimensions.heightScale(0.0003) }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <NavigationContainer ref={navigationRef}>
             <AppNavigator />
           </NavigationContainer>
