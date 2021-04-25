@@ -45,7 +45,6 @@ export const WrapperIcon = styled.View`
 
 export const InputText = styled(TextInput).attrs({
   placeholderTextColor: color.dark_gray,
-  
 })`
   background-color: transparent;
   font-family: ${font.regular};
