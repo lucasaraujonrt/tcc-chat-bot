@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "android": "yarn run android:clean && react-native run-android",
+    "android:ios": "yarn run android:clean-ios && react-native run-android",
     "clean:install": "rm -rf node_modules && android:clean",
     "android:clean": "cd android && gradlew clean && cd ..",
+    "android:clean-ios": "cd android && ./gradlew clean && cd ..",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "pod-ios": "cd ios && pod install && cd .. && react-native run-ios",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
