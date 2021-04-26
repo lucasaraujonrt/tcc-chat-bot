@@ -20,7 +20,7 @@ export const WrapperForm = styled(KeyboardAwareScrollView)`
 
 export const WrapperTitle = styled.View`
   align-self: center;
-  margin-top: ${Dimension.heightScale(0.03)}px;
+  margin-top: ${Dimension.heightScale(0.06)}px;
 `;
 
 export const Title = styled.Text`
@@ -33,7 +33,7 @@ export const Title = styled.Text`
 
 export const WrapperInput = styled.View`
   align-self: center;
-  margin-top: ${Dimension.heightScale(0.1)}px;
+  margin-top: ${Dimension.heightScale(0.07)}px;
   max-width: 90%;
 `;
 
