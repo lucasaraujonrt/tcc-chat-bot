@@ -9,6 +9,10 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
+  const handleSubmit = () => {
+    navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
+  }
+
   return (
     <>
       <S.Container>
@@ -44,9 +48,9 @@ const Login: React.FC = () => {
               </S.WrapperLink>
               <Button 
                 title="Entrar"
-                onPress={()=> console.log('aaaaaaaaaaa')}
+                onPress={handleSubmit}
                 width={0.5}
-                disabled
+                // disabled
               />
               </S.WrapperForm>
             </S.SubContainer>
