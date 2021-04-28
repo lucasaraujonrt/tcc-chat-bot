@@ -1,8 +1,8 @@
 import styled from 'styled-components/native';
-import * as Dimensions from '../../services/dimensionsService';
-import Notification from '../../assets/svg/home/ic_notification.svg';
 import Bot from '../../assets/svg/home/ic_bot.svg';
+import Notification from '../../assets/svg/home/ic_notification.svg';
 import { color, font } from '../../config/theme.json';
+import * as Dimensions from '../../services/dimensionsService';
 
 interface IProps {
   fontMe?: boolean
