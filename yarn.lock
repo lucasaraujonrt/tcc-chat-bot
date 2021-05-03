@@ -6451,6 +6451,11 @@ react-native-keyboard-aware-scroll-view@^0.9.3:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-pager-view@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.1.5.tgz#711599b6e74ccf922c7dc6e4a8efb7e8ca90775a"
+  integrity sha512-Z2mW1Rz6Mzh2IDKL7KFi/s1BkZxpuGzRhmvYXWVN/TXDcEC8m3wIdCJOccDawbaQ1NXg2pIdACzmfHpO/tbo+w==
+
 react-native-reanimated@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.0.1.tgz#440bbba813df283e9f410ed763e4791d859c67e9"
