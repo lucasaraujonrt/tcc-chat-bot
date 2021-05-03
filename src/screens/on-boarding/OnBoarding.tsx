@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import Pager from 'react-native-pager-view';
-import CleanUp from '../../assets/svg/on-boarding/img_clean_up.svg';
-import Delivery from '../../assets/svg/on-boarding/img_delivery.svg';
-import Mobile from '../../assets/svg/on-boarding/img_mobile.svg';
-import navigationService from '../../services/navigationService';
+import CleanUp from '@mobile/assets/svg/on-boarding/img_clean_up.svg';
+import Delivery from '@mobile/assets/svg/on-boarding/img_delivery.svg';
+import Mobile from '@mobile/assets/svg/on-boarding/img_mobile.svg';
+import navigationService from '@mobile/services/navigationService';
 import * as S from './OnBoarding.style';
 import Paper from './paper/PaperComponent';
 

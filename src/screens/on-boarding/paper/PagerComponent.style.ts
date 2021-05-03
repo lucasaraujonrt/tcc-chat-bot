@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { color, font } from '../../../config/theme.json';
-import * as Dimensions from '../../../services/dimensionsService';
+import { color, font } from '@mobile/config/theme.json';
+import * as Dimensions from '@mobile/services/dimensionsService';
 
 export const Container = styled.View.attrs({
   collapsable: false,

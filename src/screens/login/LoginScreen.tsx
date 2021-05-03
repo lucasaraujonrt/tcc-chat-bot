@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Button from '../../components/button/Button';
-import Input from '../../components/input/Input';
-import { InputType } from '../../enum/inputType';
-import navigationService from '../../services/navigationService';
+import Button from '@mobile/components/button/Button';
+import Input from '@mobile/components/input/Input';
+import { InputType } from '@mobile/enum/inputType';
+import navigationService from '@mobile/services/navigationService';
 import * as S from './LoginScreen.style';
 
 const Login: React.FC = () => {

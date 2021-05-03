@@ -4,6 +4,9 @@ module.exports = {
     [
       'module-resolver',
       {
+        alias: {
+          '@mobile': './src',
+        },
         extensions: [
           '.native.ts',
           '.native.tsx',

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { color, font } from '../../config/theme.json';
-import * as Window from '../../services/dimensionsService';
+import { color, font } from '@mobile/config/theme.json';
+import * as Window from '@mobile/services/dimensionsService';
 
 interface IProps {
   width?: number,

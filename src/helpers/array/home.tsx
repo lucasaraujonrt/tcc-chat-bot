@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
-import User from '../../assets/svg/home/ic_user.svg';
-import Status from '../../assets/svg/home/ic_status.svg';
-import Form from '../../assets/svg/home/ic_form.svg';
-import Support from '../../assets/svg/home/ic_support.svg';
+import User from '@mobile/assets/svg/home/ic_user.svg';
+import Status from '@mobile/assets/svg/home/ic_status.svg';
+import Form from '@mobile/assets/svg/home/ic_form.svg';
+import Support from '@mobile/assets/svg/home/ic_support.svg';
 
 export enum HomeEnum {
   PROFILE = 1,

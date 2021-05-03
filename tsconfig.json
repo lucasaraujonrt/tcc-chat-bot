@@ -8,6 +8,11 @@
     "jsx": "react-native",
     "isolatedModules": true,
     "esModuleInterop": true,
+    "paths": {
+      "@mobile/*": [
+        "./src/*"
+      ]
+    },
     "plugins": [
       {
         "name": "typescript-styled-plugin",

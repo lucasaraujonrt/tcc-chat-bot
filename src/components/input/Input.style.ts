@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { TextInput } from 'react-native'
-import { color, font } from '../../config/theme.json';
-import * as Window from '../../services/dimensionsService';
+import { color, font } from '@mobile/config/theme.json';
+import * as Window from '@mobile/services/dimensionsService';
 import Mail from 'react-native-vector-icons/MaterialCommunityIcons';
 import Lock from 'react-native-vector-icons/Feather';
 import Eyes from 'react-native-vector-icons/Feather'; 

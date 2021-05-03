@@ -1,6 +1,6 @@
 import React from 'react';
-import { HomeFirstRow , HomeSecondRow } from '../../helpers/array/home';
-import navigationService from '../../services/navigationService';
+import { HomeFirstRow , HomeSecondRow } from '@mobile/helpers/array/home';
+import navigationService from '@mobile/services/navigationService';
 import * as S from './HomeScreen.style';
 
 const Home: React.FC = () => {

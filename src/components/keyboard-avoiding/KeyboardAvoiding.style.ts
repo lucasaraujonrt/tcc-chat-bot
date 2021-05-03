@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView, KeyboardAwareScrollViewProps  } from 'react-native-keyboard-aware-scroll-view';
-import * as Window from '../../services/dimensionsService';
+import * as Window from '@mobile/services/dimensionsService';
 
 interface IProps {
   padding?: number,

@@ -1,7 +1,7 @@
 import Arrow from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
-import { color, font } from '../../config/theme.json';
-import * as Dimension from '../../services/dimensionsService';
+import { color, font } from '@mobile/config/theme.json';
+import * as Dimension from '@mobile/services/dimensionsService';
 
 export const Container = styled.View`
   background-color: ${color.primary};
