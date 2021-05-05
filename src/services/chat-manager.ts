@@ -2,13 +2,18 @@ import realTime from './firebase-settings';
 
 const realTimeManager = {
   findUser: async (name: any) => {
-    const user = await realTime.database().ref('users').orderByChild('name').equalTo(name).once('value');
+    const user = await realTime
+      .database()
+      .ref('users')
+      .orderByChild('name')
+      .equalTo(name)
+      .once('value');
 
-    if (user.exists()){
+    if (user.exists()) {
       return Object.values(user.val())[0];
     }
 
-    return false;
+    return null;
   },
 
   saveUser: async (user: any) => {
@@ -20,20 +25,20 @@ const realTimeManager = {
   },
 
   updateMessages: async (callback: any) => {
-    realTime.database()
+    realTime
+      .database()
       .ref('messages')
       .limitToLast(20)
       .on('child_added', (snapshot) => {
         callback(parse(snapshot));
       });
   },
-
 };
 
 const parse = (snapshot: any) => {
   const { createdAt, text, user } = snapshot.val();
   const { key: _id } = snapshot;
-  const message = { _id, createdAt, text, user};
+  const message = { _id, createdAt, text, user };
   return message;
 };
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Input from '@mobile/components/input/Input';
-import * as S from './Dummy.style';
 import { InputType } from '@mobile/enum/inputType';
 import Button from '@mobile/components/button/Button';
 import realTimeManager from '@mobile/services/chat-manager';
 import navigationService from '@mobile/services/navigationService';
 import { setUser } from '@mobile/store/actions/user';
+import * as S from './Dummy.style';
 
 const DummyScreen: React.FC = () => {
   const [name, setName] = useState('');
@@ -16,18 +16,19 @@ const DummyScreen: React.FC = () => {
     if (!name && name.trim() === '') return;
     let user = await realTimeManager.findUser(name);
 
-    if (!user) {
+    if (user === null) {
       user = {
         _id: new Date().getTime(),
         name,
-        avatar: 'https://64.media.tumblr.com/c20774d95c9034e141939e1caa87d0bc/bb96bfcca3cd61d5-3c/s400x600/c53ec9bd50397598ac0a55060ac201c92bc2a605.jpg'
+        avatar:
+          'https://i.pinimg.com/originals/79/a6/f2/79a6f25706fe05e38089e08239044eb5.jpg',
       };
       dispatch(setUser(user));
       await realTimeManager.saveUser(user);
-    };
+    }
 
     navigationService.navigate('chat');
-  }
+  };
 
   return (
     <S.Container>
@@ -40,14 +41,11 @@ const DummyScreen: React.FC = () => {
         />
 
         <S.WrapperButton>
-          <Button 
-            title="Avançar"
-            onPress={goToChat}
-          />
+          <Button title="Avançar" onPress={goToChat} />
         </S.WrapperButton>
       </S.WrapperInputs>
     </S.Container>
   );
-}
+};
 
 export default DummyScreen;

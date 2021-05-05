@@ -1,4 +1,4 @@
-import { ACTION_SET_CHAT_USER } from "../actions/actionTypes";
+import { ACTION_SET_CHAT_USER } from '../actions/actionTypes';
 
 const initialState: any = {
   user: null,
@@ -12,7 +12,7 @@ export const userReducer = (state = initialState, action: any) => {
         user: action.payload,
       };
     default:
-     return state;
+      return state;
   }
 };
 
