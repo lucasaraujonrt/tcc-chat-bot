@@ -1,9 +1,13 @@
 import React, { ReactElement } from 'react';
+import { createStack } from './services/navigationService';
+
 import ForgotPassword from './screens/forgot-password';
-import Home from './screens/home';
 import LoginScreen from './screens/login';
 import OnBoarding from './screens/on-boarding';
-import { createStack } from './services/navigationService';
+
+import Home from './screens/home';
+import Chat from './screens/chat';
+import Dummy from './screens/dummy'
 
 
 const MainStack = createStack();
@@ -14,6 +18,14 @@ const routeList: Array<{name: string, component: ReactElement}> = [
     {
       name: 'home',
       component: <ContentStack.Screen name="home" component={Home}/>
+    },
+    {
+      name: 'dummy',
+      component: <ContentStack.Screen name="dummy" component={Dummy}/>
+    },
+    {
+      name: 'chat',
+      component: <ContentStack.Screen name="chat" component={Chat}/>
     },
 ];
 

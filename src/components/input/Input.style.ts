@@ -5,6 +5,7 @@ import * as Window from '@mobile/services/dimensionsService';
 import Mail from 'react-native-vector-icons/MaterialCommunityIcons';
 import Lock from 'react-native-vector-icons/Feather';
 import Eyes from 'react-native-vector-icons/Feather'; 
+import User from '../../assets/svg/home/ic_user.svg';
 
 interface IProps {
   password?: boolean,
@@ -20,6 +21,11 @@ export const IconMail = styled(Mail).attrs({
   name: 'email-outline',
   color: color.primary,
   size: 24,
+})``;
+
+export const IconUser = styled(User).attrs({
+  width: Window.widthScale(0.05),
+  height: Window.heightScale(0.05),
 })``;
 
 export const IconLock = styled(Lock).attrs({

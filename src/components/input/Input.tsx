@@ -38,7 +38,7 @@ const Input = ({
       case InputType.PASSWORD: 
         return <S.IconLock />
       case InputType.USER:
-        return 'icone de user'
+        return <S.IconUser />
       default:
         break;
     }
