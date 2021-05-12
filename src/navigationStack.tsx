@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import ForgotPassword from './screens/forgot-password';
 import Home from './screens/home';
+import FormScreen from './screens/form';
 import LoginScreen from './screens/login';
 import OnBoarding from './screens/on-boarding';
 import { createStack } from './services/navigationService';
@@ -14,6 +15,10 @@ const routeList: Array<{name: string, component: ReactElement}> = [
     {
       name: 'home',
       component: <ContentStack.Screen name="home" component={Home}/>
+    },
+    {
+      name: 'form',
+      component: <ContentStack.Screen name="form" component={FormScreen}/>
     },
 ];
 

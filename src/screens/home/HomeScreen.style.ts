@@ -54,7 +54,7 @@ export const BadgeNotification = styled.View`
 export const BadgeCount = styled.Text`
   color: ${color.cream};
   font-family: ${font.medium};
-  font-size: ${Dimensions.fontScale(9)}px;
+  font-size: ${Dimensions.fontScale(8)}px;
 `;
 
 export const WrapperMe = styled.View`
