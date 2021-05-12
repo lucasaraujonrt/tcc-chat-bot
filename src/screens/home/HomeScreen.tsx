@@ -20,7 +20,7 @@ const Home: React.FC = () => {
         <S.TextMe>O que deseja fazer hoje?</S.TextMe>
       </S.WrapperMe>
       <S.WhiteBackground>
-        <S.WrapperBot>
+        <S.WrapperBot onPress={() => navigationService.navigate('dummy')}>
           <S.WrapperIconBot>
             <S.IconBot />
           </S.WrapperIconBot>

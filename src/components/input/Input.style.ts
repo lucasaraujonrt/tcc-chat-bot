@@ -1,19 +1,21 @@
 import styled from 'styled-components/native';
-import { TextInput } from 'react-native'
+import { TextInput } from 'react-native';
 import { color, font } from '@mobile/config/theme.json';
 import * as Window from '@mobile/services/dimensionsService';
 import Mail from 'react-native-vector-icons/MaterialCommunityIcons';
 import Lock from 'react-native-vector-icons/Feather';
-import Eyes from 'react-native-vector-icons/Feather'; 
-
-interface IProps {
-  password?: boolean,
-  isFocused?: boolean,
-}
+import Eyes from 'react-native-vector-icons/Feather';
+import User from '../../assets/svg/home/ic_user.svg';
 
 export const IconEye = styled(Eyes).attrs({
   size: 18,
   color: color.dark_gray,
+})``;
+
+export const IconLock = styled(Lock).attrs({
+  name: 'lock',
+  color: color.primary,
+  size: 23,
 })``;
 
 export const IconMail = styled(Mail).attrs({
@@ -22,10 +24,9 @@ export const IconMail = styled(Mail).attrs({
   size: 24,
 })``;
 
-export const IconLock = styled(Lock).attrs({
-  name: 'lock',
-  color: color.primary,
-  size: 23,
+export const IconUser = styled(User).attrs({
+  width: Window.widthScale(0.05),
+  height: Window.heightScale(0.05),
 })``;
 
 export const Container = styled.View`
@@ -55,7 +56,7 @@ export const InputText = styled(TextInput).attrs({
 `;
 
 export const WrapperPassword = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.5
+  activeOpacity: 0.5,
 })`
   position: absolute;
   right: ${`${Window.widthScale(0.02)}px`};

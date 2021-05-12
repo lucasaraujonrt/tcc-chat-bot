@@ -8,20 +8,20 @@ import * as S from './OnBoarding.style';
 import Paper from './paper/PaperComponent';
 
 const OnBoarding: React.FC = () => {
-  const [position, setPosition] = useState(0);
+  const [, setPosition] = useState(0);
   const [index, setIndex] = useState(0);
   const pagerRef = useRef<Pager>(null);
 
   const onHandlePress = () => {
-    pagerRef.current && pagerRef?.current?.setPage(index + 1);
+    pagerRef?.current?.setPage(index + 1);
     setIndex(index + 1);
     if (index >= 2) {
-       navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
+      navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
     }
-  }
+  };
 
   return (
-    <React.Fragment>
+    <>
       <S.Container>
         <Pager
           initialPage={index}
@@ -29,7 +29,6 @@ const OnBoarding: React.FC = () => {
           onPageScroll={(e) => setPosition(e.nativeEvent.position)}
           ref={pagerRef}
           showPageIndicator
-          style={{ height: '100%', width: '100%' }}
           orientation="horizontal"
           overScrollMode="never"
           offscreenPageLimit={2}
@@ -58,16 +57,12 @@ const OnBoarding: React.FC = () => {
             <S.Link>PULAR</S.Link>
           </S.WrapperLink>
           <S.ButtonBall onPress={onHandlePress}>
-            {index >= 2 ? (
-              <S.TextStart>Começar</S.TextStart>
-            ) : (
-              <S.IconArrow />
-            )}
+            {index >= 2 ? <S.TextStart>Começar</S.TextStart> : <S.IconArrow />}
           </S.ButtonBall>
         </S.WrapperButtons>
       </S.Container>
-    </React.Fragment>
+    </>
   );
-}
+};
 
 export default OnBoarding;
