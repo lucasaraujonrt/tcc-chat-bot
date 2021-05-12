@@ -17,10 +17,14 @@ export const InputText = styled.TextInput.attrs({
   max-width: ${Window.widthScale(0.55)}px;
 `;
 
+export const MessageContainer = styled.View`
+  background-color: red;
+`;
+
 export const InputStyle = {
   placeholderTextColor: color.primary,
   backgroundColor: color.little_coral,
   fontFamily: font.regular,
   color: color.dark_gray,
   borderRadius: 50,
-}
+};

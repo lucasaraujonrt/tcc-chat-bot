@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import ptBr from 'dayjs/locale/pt-br';
-import { GiftedChat, Send } from 'react-native-gifted-chat';
+import {
+  GiftedChat,
+  Send,
+  Message,
+  MessageText,
+} from 'react-native-gifted-chat';
 import realTimeManager from '@mobile/services/chat-manager';
 import { useSelector } from 'react-redux';
 import * as S from './ChatScreen.style';
 
 const ChatScreen: React.FC = () => {
-  const user = useSelector((state: any) => state.user);
-  const [message, setMessage] = useState([]);
+  const user = useSelector((state: any) => state.user.user);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     realTimeManager.updateMessages((message: any) => {
-      setMessage((prevState) => GiftedChat.append(prevState, message));
+      setMessages((prevState) => GiftedChat.append(prevState, message));
     });
   }, []);
 
@@ -36,12 +41,17 @@ const ChatScreen: React.FC = () => {
 
   return (
     <GiftedChat
-      messages={message}
+      messages={messages}
       user={user}
       placeholder="Digite sua mensagem aqui"
       onSend={onSend}
       locale={ptBr}
       textInputStyle={S.InputStyle}
+      showAvatarForEveryMessage
+      showUserAvatar
+      renderUsernameOnMessage
+      // renderMessage={renderMessage}
+      // renderMessageText={renderMessageText}
     />
   );
 };
