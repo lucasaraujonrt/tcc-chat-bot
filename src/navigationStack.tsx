@@ -2,31 +2,35 @@ import React, { ReactElement } from 'react';
 import { createStack } from './services/navigationService';
 
 import ForgotPassword from './screens/forgot-password';
+import Home from './screens/home';
+import FormScreen from './screens/form';
 import LoginScreen from './screens/login';
 import OnBoarding from './screens/on-boarding';
 
-import Home from './screens/home';
 import Chat from './screens/chat';
-import Dummy from './screens/dummy'
-
+import Dummy from './screens/dummy';
 
 const MainStack = createStack();
 const ContentStack = createStack();
 const StartStack = createStack();
 
-const routeList: Array<{name: string, component: ReactElement}> = [
-    {
-      name: 'home',
-      component: <ContentStack.Screen name="home" component={Home}/>
-    },
-    {
-      name: 'dummy',
-      component: <ContentStack.Screen name="dummy" component={Dummy}/>
-    },
-    {
-      name: 'chat',
-      component: <ContentStack.Screen name="chat" component={Chat}/>
-    },
+const routeList: Array<{ name: string; component: ReactElement }> = [
+  {
+    name: 'home',
+    component: <ContentStack.Screen name="home" component={Home} />,
+  },
+  {
+    name: 'dummy',
+    component: <ContentStack.Screen name="dummy" component={Dummy} />,
+  },
+  {
+    name: 'chat',
+    component: <ContentStack.Screen name="chat" component={Chat} />,
+  },
+  {
+    name: 'form',
+    component: <ContentStack.Screen name="form" component={FormScreen} />,
+  },
 ];
 
 const ContentNavigator = () => (
@@ -44,8 +48,11 @@ const StartNavigator = () => (
 );
 
 const AppNavigator = () => (
-  <MainStack.Navigator initialRouteName="Start" screenOptions={{ headerShown: false }}>
-    <MainStack.Screen name='Start' component={StartNavigator} />
+  <MainStack.Navigator
+    initialRouteName="Start"
+    screenOptions={{ headerShown: false }}
+  >
+    <MainStack.Screen name="Start" component={StartNavigator} />
     <MainStack.Screen name="Content" component={ContentNavigator} />
   </MainStack.Navigator>
 );
