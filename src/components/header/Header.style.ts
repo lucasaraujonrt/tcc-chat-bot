@@ -1,11 +1,10 @@
-import Arrow from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import { color, font } from '@mobile/config/theme.json';
 import * as Dimension from '@mobile/services/dimensionsService';
 
 export const Container = styled.View`
   background-color: ${color.primary};
-  padding-top: ${Dimension.widthScale(0.03)}px;
+  padding-top: ${Dimension.widthScale(0.05)}px;
   width: ${Dimension.widthScale(1)}px;
   flex-direction: row;
 `;
@@ -17,12 +16,6 @@ export const WrapperIcon = styled.TouchableOpacity.attrs({
   justify-content: center;
   align-items: center;
 `;
-
-export const IconFeather = styled(Arrow).attrs({
-  name: 'chevron-back',
-  color: color.cream,
-  size: 30,
-})``;
 
 export const WrapperTitle = styled.View`
   width: ${Dimension.widthScale(0.6)}px;
