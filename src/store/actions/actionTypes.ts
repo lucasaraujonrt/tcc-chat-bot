@@ -1,0 +1,6 @@
+// user
+export const ACTION_SET_CHAT_USER = 'ACTION_SET_CHAT_USER';
+
+// loading
+export const ACTION_LOADING_END = 'ACTION_LOADING_END';
+export const ACTION_LOADING_START = 'ACTION_LOADING_START';

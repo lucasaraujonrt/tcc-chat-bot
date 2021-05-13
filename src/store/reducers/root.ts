@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux';
 
-const appReducer = combineReducers({});
+import loadingReducer from './loading';
+import userReducer from './user';
+
+const appReducer = combineReducers({
+  user: userReducer,
+  loading: loadingReducer,
+});
 
 const rootReducer = (state: any, action: any) => {
   return appReducer(state, action);
