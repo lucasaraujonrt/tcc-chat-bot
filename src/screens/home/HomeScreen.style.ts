@@ -90,7 +90,6 @@ export const WrapperBot = styled.TouchableOpacity.attrs({
   align-items: center;
   border-radius: ${Dimensions.heightScale(0.02)}px;
   background-color: ${color.rose_quartz};
-  elevation: 5;
 `;
 
 export const WrapperIconBot = styled.View`
@@ -103,7 +102,7 @@ export const IconBot = styled(Bot)``;
 export const TextHome = styled.Text`
   width: 40%;
   color: ${color.black};
-  font-family: ${font.semiBold};
+  font-family: ${font.medium};
   font-size: ${Dimensions.fontScale(22)}px;
   text-align: center;
 `;
@@ -125,7 +124,6 @@ export const SquareContainer = styled.TouchableOpacity.attrs({
   height: ${Dimensions.heightScale(0.18)}px;
   border-radius: ${Dimensions.heightScale(0.02)}px;
   background-color: ${color.rose_quartz};
-  elevation: 5;
 `;
 
 export const WrapperSquareIcon = styled.View`
@@ -134,7 +132,7 @@ export const WrapperSquareIcon = styled.View`
 
 export const SquareText = styled.Text`
   color: ${color.black};
-  font-family: ${font.semiBold};
+  font-family: ${font.medium};
   font-size: ${Dimensions.fontScale(16)}px;
   text-align: center;
 `;

@@ -1,5 +1,6 @@
 import React from 'react';
 import * as S from './Header.style';
+import Arrow from '../../assets/svg/header/ic_arrow_back.svg';
 
 interface IHeader {
   onPress: () => void,
@@ -13,7 +14,7 @@ const Header = ({
   return (
     <S.Container>
       <S.WrapperIcon onPress={onPress}>
-        <S.IconFeather />
+        <Arrow/>
       </S.WrapperIcon>
       <S.WrapperTitle>
         <S.Title>{title}</S.Title>
