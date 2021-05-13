@@ -46,7 +46,7 @@ const ChatScreen: React.FC = () => {
       placeholder="Digite sua mensagem aqui"
       onSend={onSend}
       locale={ptBr}
-      textInputStyle={S.InputStyle}
+      // textInputStyle={S.InputStyle}
       showAvatarForEveryMessage
       showUserAvatar
       renderUsernameOnMessage
