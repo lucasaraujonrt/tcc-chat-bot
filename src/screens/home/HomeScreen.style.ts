@@ -5,7 +5,7 @@ import { color, font } from '@mobile/config/theme.json';
 import * as Dimensions from '@mobile/services/dimensionsService';
 
 interface IProps {
-  fontMe?: boolean
+  fontMe?: boolean;
 }
 
 export const Container = styled.View`
@@ -26,7 +26,7 @@ export const WrapperLogo = styled.View`
 `;
 
 export const WrapperIconNotification = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.7
+  activeOpacity: 0.7,
 })`
   width: ${Dimensions.widthScale(0.2)}px;
   justify-content: center;
@@ -61,13 +61,14 @@ export const WrapperMe = styled.View`
   flex-direction: column;
   width: ${Dimensions.widthScale(0.7)}px;
   margin-left: ${Dimensions.widthScale(0.1)}px;
-`; 
+`;
 
 export const TextMe = styled.Text`
   color: ${color.cream};
   font-family: ${font.medium};
   line-height: ${Dimensions.heightScale(0.05)}px;
-  font-size: ${({ fontMe }: IProps ) => (fontMe ? Dimensions.fontScale(24) : Dimensions.fontScale(16))}px;
+  font-size: ${({ fontMe }: IProps) =>
+    fontMe ? Dimensions.fontScale(24) : Dimensions.fontScale(16)}px;
 `;
 
 export const WhiteBackground = styled.View`
@@ -112,7 +113,7 @@ export const WrapperRows = styled.View`
   width: ${Dimensions.widthScale(0.8)}px;
   flex-direction: row;
   justify-content: space-between;
-`; 
+`;
 
 export const SquareContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
