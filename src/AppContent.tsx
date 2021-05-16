@@ -7,18 +7,25 @@ import * as Dimensions from './services/dimensionsService';
 import { navigationRef } from './services/navigationService';
 
 class AppContent extends Component {
-  render(){
-    return(
+  render() {
+    return (
       <>
-        <StatusBar barStyle="light-content" animated backgroundColor={color.primary}/>
-        <KeyboardAvoidingView style={{ flex: 1, paddingTop: Dimensions.heightScale(0.0002) }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <StatusBar
+          barStyle="light-content"
+          animated
+          backgroundColor={color.primary}
+        />
+        <KeyboardAvoidingView
+          style={{ flex: 1, paddingTop: Dimensions.heightScale(0.0002) }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
           <NavigationContainer ref={navigationRef}>
             <AppNavigator />
           </NavigationContainer>
         </KeyboardAvoidingView>
       </>
-    )
+    );
   }
-};
+}
 
 export default AppContent;
