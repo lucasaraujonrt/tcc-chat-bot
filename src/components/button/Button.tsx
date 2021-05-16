@@ -2,25 +2,15 @@ import React from 'react';
 import * as S from './Button.style';
 
 interface IButton {
-  width?: number,
-  title: string,
-  onPress: () => void,
-  disabled?: boolean,
+  width: number;
+  title: string;
+  onPress: () => void;
+  disabled?: any;
 }
 
-
-const Button = ({
-  title,
-  width,
-  onPress,
-  disabled,
-}: IButton) => {
+const Button = ({ title, width, onPress, disabled }: IButton) => {
   return (
-    <S.ButtonContainer 
-      onPress={onPress} 
-      disabled={disabled} 
-      width={width}
-    >
+    <S.ButtonContainer onPress={onPress} disabled={disabled} width={width}>
       {disabled ? (
         <S.Loading animating={disabled} />
       ) : (
@@ -28,6 +18,6 @@ const Button = ({
       )}
     </S.ButtonContainer>
   );
-}
+};
 
 export default Button;

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import EmailValidator from 'email-validator';
 import Button from '@mobile/components/button/Button';
 import Header from '@mobile/components/header/Header';
 import Input from '@mobile/components/input/Input';
 import { ForgotPassword } from '@mobile/enum/forgotPasswordEnum';
 import { InputType } from '@mobile/enum/inputType';
 import navigationService from '@mobile/services/navigationService';
+import * as MessageService from '@mobile/services/message';
+import { changePassword, passwordRecovery } from '@mobile/store/actions/auth';
 import * as S from './ForgotPasswordScreen.style';
 
 const ForgotPasswordScreen: React.FC = () => {
@@ -14,15 +17,45 @@ const ForgotPasswordScreen: React.FC = () => {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [step, setStep] = useState(ForgotPassword.FORGOT);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const onHandleSubmitEmail = () => {
-    // dispatch();
-    setStep(ForgotPassword.CHANGE_PASSWORD);
+    const validEmail = EmailValidator.validate(email);
+    if (!validEmail) {
+      return MessageService.error('E-mail inválido');
+    }
+    dispatch(
+      changePassword(email, (data) => {
+        if (data) {
+          setStep(ForgotPassword.CHANGE_PASSWORD);
+        }
+      })
+    );
   };
 
   const onHandleSubmit = () => {
-    navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
+    if (code.trim() === '' || code.length < 5) {
+      return MessageService.error('Código inválido');
+    }
+    if (password !== newPassword) {
+      return MessageService.error('Senhas diferentes verifique-as');
+    }
+
+    dispatch(
+      passwordRecovery(
+        {
+          email,
+          changeToken: code,
+          password,
+        },
+        (check) => {
+          if (check) {
+            navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
+            MessageService.message('Senha trocada com sucesso!');
+          }
+        }
+      )
+    );
   };
 
   return (
@@ -78,6 +111,7 @@ const ForgotPasswordScreen: React.FC = () => {
                   value={password}
                   onChangeText={setPassword}
                   autoCapitalized="none"
+                  password
                 />
                 <Input
                   placeholder="Confirme sua senha"
@@ -85,6 +119,7 @@ const ForgotPasswordScreen: React.FC = () => {
                   autoCapitalized="none"
                   value={newPassword}
                   onChangeText={setNewPassword}
+                  password
                 />
               </S.WrapperInput>
               <S.WrapperButton>

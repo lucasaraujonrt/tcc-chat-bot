@@ -1,10 +1,16 @@
-import { ACTION_SET_CHAT_USER } from '../actions/actionTypes';
+import {
+  ACTION_SET_CHAT_USER,
+  UserDispatchTypes,
+} from '../actions/actionTypes';
 
-const initialState: any = {
+const initialState: reducers.UserState = {
   user: null,
 };
 
-export const userReducer = (state = initialState, action: any) => {
+export const userReducer = (
+  state = initialState,
+  action: UserDispatchTypes
+) => {
   switch (action.type) {
     case ACTION_SET_CHAT_USER:
       return {

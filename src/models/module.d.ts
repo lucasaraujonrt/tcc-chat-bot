@@ -6,6 +6,12 @@ export type AuthRequest = {
 };
 
 export type AuthResponse = {
-  token: string | null;
+  accessToken: string | null;
   refreshToken: string | null;
+};
+
+export type ChangePasswordRequest = {
+  changeToken: string | null;
+  email: string | null;
+  password: string | null;
 };

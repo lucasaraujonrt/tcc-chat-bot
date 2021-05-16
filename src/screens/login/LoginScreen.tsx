@@ -1,16 +1,41 @@
 import React, { useState } from 'react';
+import EmailValidator from 'email-validator';
 import Button from '@mobile/components/button/Button';
 import Input from '@mobile/components/input/Input';
 import { InputType } from '@mobile/enum/inputType';
 import navigationService from '@mobile/services/navigationService';
+import * as MessageService from '@mobile/services/message';
+import { useDispatch } from 'react-redux';
+import { authenticate } from '@mobile/store/actions/auth';
+
+// import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './LoginScreen.style';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
+  // const { loading } = useReduxState();
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
+    const validateEmail = EmailValidator.validate(email);
+    if (!validateEmail) {
+      return MessageService.error('E-mail inválido');
+    }
+
+    if (password.length < 6 || password.trim() === '') {
+      return MessageService.error('Digite uma senha válida');
+    }
+    setLoading(true);
+    dispatch(
+      authenticate({ email, password }, (data) => {
+        if (data) {
+          navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
+        }
+      })
+    );
+    setLoading(false);
   };
 
   return (
@@ -50,8 +75,8 @@ const Login: React.FC = () => {
               <Button
                 title="Entrar"
                 onPress={handleSubmit}
-                width={0.5}
-                // disabled
+                width={0.6}
+                disabled={loading}
               />
             </S.WrapperForm>
           </S.SubContainer>
