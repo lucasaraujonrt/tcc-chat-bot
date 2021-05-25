@@ -10,6 +10,7 @@ export type AuthState = {
 
 export type UserState = {
   user: string | null;
+  me: models.MeResponse | null;
 };
 
 export type LoadingState = {

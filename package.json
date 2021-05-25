@@ -25,6 +25,7 @@
     "dayjs": "^1.10.4",
     "email-validator": "^2.0.4",
     "firebase": "^8.4.3",
+    "moment-timezone": "^0.5.33",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-gesture-handler": "^1.10.3",

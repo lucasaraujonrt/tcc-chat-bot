@@ -9,9 +9,14 @@ export enum HomeEnum {
   STATUS = 2,
   FORM = 3,
   SUPPORT = 4,
-};
+}
 
-export const HomeFirstRow: Array<{id: number, name: string, icon: ReactNode, navigation: string }> = [
+export const HomeFirstRow: Array<{
+  id: number;
+  name: string;
+  icon: ReactNode;
+  navigation: string;
+}> = [
   {
     id: HomeEnum.PROFILE,
     name: 'Perfil',
@@ -26,11 +31,16 @@ export const HomeFirstRow: Array<{id: number, name: string, icon: ReactNode, nav
   },
 ];
 
-export const HomeSecondRow: Array<{id: number, name: string, icon: ReactNode, navigation: string }> = [
+export const HomeSecondRow: Array<{
+  id: number;
+  name: string;
+  icon: ReactNode;
+  navigation: string;
+}> = [
   {
     id: HomeEnum.FORM,
     name: 'Formulário',
-    icon: <Form width={50} height={50}/>,
+    icon: <Form width={50} height={50} />,
     navigation: 'form',
   },
   {

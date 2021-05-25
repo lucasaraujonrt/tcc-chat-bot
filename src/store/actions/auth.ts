@@ -5,11 +5,12 @@ import * as Storage from '@mobile/services/storage';
 import * as Message from '@mobile/services/message';
 import { startLoading, stopLoading } from './loading';
 import { ACTION_AUTH_LOGIN, ACTION_AUTH_LOGGED } from './actionTypes';
+import { getMe } from './user';
 
 export const authenticate = (
   userData: models.AuthRequest,
   callback: (data: models.AuthResponse) => void
-) => async (dispatch: Dispatch) => {
+) => async (dispatch: Dispatch<any>) => {
   dispatch(startLoading());
   try {
     const data = await AuthApi.login(userData);
@@ -20,6 +21,7 @@ export const authenticate = (
       });
       await Storage.setItem('auth', 'true');
       await Storage.setAuthTokens(data.accessToken, data.refreshToken);
+      dispatch(getMe());
       callback(data);
     }
   } catch (error) {
@@ -40,7 +42,6 @@ export const changePassword = (
     await AuthApi.changePassword(email);
     callback(true);
   } catch (error) {
-    console.log(error);
     callback(false);
   } finally {
     dispatch(stopLoading());
@@ -57,13 +58,12 @@ export const passwordRecovery = (
     callback(true);
   } catch (error) {
     callback(false);
-    console.log(error);
   } finally {
     dispatch(stopLoading());
   }
 };
 
-export const checkLogin = () => async (dispatch: Dispatch) => {
+export const checkLogin = () => async (dispatch: Dispatch<any>) => {
   dispatch(startLoading());
   const authenticated = await Storage.getItem('auth');
   if (authenticated) {
@@ -71,6 +71,7 @@ export const checkLogin = () => async (dispatch: Dispatch) => {
       type: ACTION_AUTH_LOGGED,
       payload: true,
     });
+    dispatch(getMe());
   }
   dispatch(stopLoading());
 };

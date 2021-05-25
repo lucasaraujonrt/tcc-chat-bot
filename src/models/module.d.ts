@@ -15,3 +15,10 @@ export type ChangePasswordRequest = {
   email: string | null;
   password: string | null;
 };
+
+export type MeResponse = {
+  name: string;
+  email: string;
+  cellphone: string;
+  profileType: number;
+};
