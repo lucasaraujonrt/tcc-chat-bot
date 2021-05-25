@@ -3,14 +3,15 @@ import { color, font } from '@mobile/config/theme.json';
 import * as Window from '@mobile/services/dimensionsService';
 
 interface IProps {
-  width?: number,
-  disabled?: boolean,
+  width?: number;
+  disabled?: boolean;
 }
 
 export const ButtonContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })`
-  width: ${(props: IProps) => (props.width ? `${Window.widthScale(props.width)}px` : '100%')};
+  width: ${(props: IProps) =>
+    props.width ? `${Window.widthScale(props.width)}px` : '100%'};
   align-items: center;
   justify-content: center;
   align-self: center;

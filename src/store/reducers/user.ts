@@ -1,7 +1,12 @@
-import { ACTION_SET_CHAT_USER } from '../actions/actionTypes';
+import {
+  ACTION_SET_CHAT_USER,
+  // UserDispatchTypes,
+  ACTION_USER_ME,
+} from '../actions/actionTypes';
 
-const initialState: any = {
+const initialState: reducers.UserState = {
   user: null,
+  me: null,
 };
 
 export const userReducer = (state = initialState, action: any) => {
@@ -10,6 +15,11 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case ACTION_USER_ME:
+      return {
+        ...state,
+        me: action.payload,
       };
     default:
       return state;

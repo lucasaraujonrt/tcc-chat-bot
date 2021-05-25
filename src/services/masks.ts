@@ -1,35 +1,5 @@
 import Masker from 'vanilla-masker';
 
-export const isCpf = (cpf: string) => {
-  if (!cpf) {
-    return false;
-  }
-  cpf = cpf.replace(/\D/g, '');
-  if (checkInvalid(cpf)) {
-    const numberValue = cpf.toString().slice(0, -2);
-    const dv1 = cpf.toString()[9];
-    const dv2 = cpf.toString()[10];
-    if (checkCPFDV(numberValue, dv1) && checkCPFDV(numberValue + dv1, dv2)) {
-      return true;
-    }
-    return false;
-  }
-  return false;
-};
-
-export const isCNPJ = (cnpj: string) => {
-  cnpj = cnpj.replace(/\D/g, '');
-  if (cnpjCheckInvalid(cnpj)) {
-    const numberValue = cnpj.toString().slice(0, -2);
-    const dv1 = cnpj.toString()[12];
-    const dv2 = cnpj.toString()[13];
-    if (checkCNPJDV(numberValue, dv1) && checkCNPJDV(numberValue + dv1, dv2)) {
-      return true;
-    }
-    return false;
-  }
-  return false;
-};
 const checkInvalid = (numberParam: string) => {
   const cpf = numberParam.toString();
   if (
@@ -49,6 +19,7 @@ const checkInvalid = (numberParam: string) => {
   }
   return true;
 };
+
 const checkCPFDV = (numberParam: string, dv: string) => {
   const check = numberParam
     .split('')
@@ -65,6 +36,43 @@ const checkCPFDV = (numberParam: string, dv: string) => {
   }
   return result.toString() === dv;
 };
+
+export const isCpf = (cpf: string) => {
+  if (!cpf) {
+    return false;
+  }
+  cpf = cpf.replace(/\D/g, '');
+  if (checkInvalid(cpf)) {
+    const numberValue = cpf.toString().slice(0, -2);
+    const dv1 = cpf.toString()[9];
+    const dv2 = cpf.toString()[10];
+    if (checkCPFDV(numberValue, dv1) && checkCPFDV(numberValue + dv1, dv2)) {
+      return true;
+    }
+    return false;
+  }
+  return false;
+};
+
+const checkCNPJDV = (numberParam: string, dv: string) => {
+  const check = numberParam
+    .split('')
+    .reverse()
+    .map((item, i) => {
+      return ((i % 8) + 2) * parseInt(item, 10);
+    })
+    .reduce((x, y) => {
+      return x + y;
+    });
+  let result = check % 11;
+  if (result < 2) {
+    result = 0;
+  } else {
+    result = 11 - result;
+  }
+  return result.toString() === dv;
+};
+
 const cnpjCheckInvalid = (numberParam: string) => {
   const cnpj = numberParam.toString();
   if (
@@ -84,23 +92,19 @@ const cnpjCheckInvalid = (numberParam: string) => {
   }
   return true;
 };
-const checkCNPJDV = (numberParam: string, dv: string) => {
-  const check = numberParam
-    .split('')
-    .reverse()
-    .map((item, i) => {
-      return ((i % 8) + 2) * parseInt(item, 10);
-    })
-    .reduce((x, y) => {
-      return x + y;
-    });
-  let result = check % 11;
-  if (result < 2) {
-    result = 0;
-  } else {
-    result = 11 - result;
+
+export const isCNPJ = (cnpj: string) => {
+  cnpj = cnpj.replace(/\D/g, '');
+  if (cnpjCheckInvalid(cnpj)) {
+    const numberValue = cnpj.toString().slice(0, -2);
+    const dv1 = cnpj.toString()[12];
+    const dv2 = cnpj.toString()[13];
+    if (checkCNPJDV(numberValue, dv1) && checkCNPJDV(numberValue + dv1, dv2)) {
+      return true;
+    }
+    return false;
   }
-  return result.toString() === dv;
+  return false;
 };
 
 export const maskPhone = (value: string = '') => {

@@ -6,6 +6,9 @@ export const winFont = Dimensions.get('window').fontScale;
 
 const guidelineBaseWidth = 350;
 
-export const widthScale = (percentage: number) => Dimensions.get('window').width * percentage;
-export const heightScale = (percentage: number) => Dimensions.get('window').height * percentage;
-export const fontScale = (size: number) => size * (winWidth / guidelineBaseWidth);
+export const widthScale = (percentage: number) =>
+  Dimensions.get('window').width * percentage;
+export const heightScale = (percentage: number) =>
+  Dimensions.get('window').height * percentage;
+export const fontScale = (size: number) =>
+  size * (winWidth / guidelineBaseWidth);

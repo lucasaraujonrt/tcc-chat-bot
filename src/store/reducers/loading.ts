@@ -1,12 +1,9 @@
 import {
   ACTION_LOADING_END,
-  ACTION_LOADING_START
+  ACTION_LOADING_START,
 } from '../actions/actionTypes';
 
-export const loadingReducer = (
-  state: number = 0,
-  action: any,
-) => {
+export const loadingReducer = (state: number = 0, action: any) => {
   switch (action.type) {
     case ACTION_LOADING_START:
       return state + 1;

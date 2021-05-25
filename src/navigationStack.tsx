@@ -1,6 +1,9 @@
-import React, { ReactElement } from 'react';
-import { createStack } from './services/navigationService';
+import React, { ReactElement, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
+import * as Storage from './services/storage';
+import navigationService, { createStack } from './services/navigationService';
+import useReduxState from './hooks/useReduxState';
 import ForgotPassword from './screens/forgot-password';
 import Home from './screens/home';
 import FormScreen from './screens/form';
@@ -9,6 +12,7 @@ import OnBoarding from './screens/on-boarding';
 
 import Chat from './screens/chat';
 import Dummy from './screens/dummy';
+import { checkLogin } from './store/actions/auth';
 
 const MainStack = createStack();
 const ContentStack = createStack();
@@ -39,13 +43,32 @@ const ContentNavigator = () => (
   </ContentStack.Navigator>
 );
 
-const StartNavigator = () => (
-  <StartStack.Navigator screenOptions={{ headerShown: false }}>
-    <StartStack.Screen name="onboarding" component={OnBoarding} />
-    <StartStack.Screen name="login" component={LoginScreen} />
-    <StartStack.Screen name="forgot" component={ForgotPassword} />
-  </StartStack.Navigator>
-);
+const StartNavigator = () => {
+  const dispatch = useDispatch();
+  const { logged } = useReduxState().auth;
+
+  useEffect(() => {
+    dispatch(checkLogin());
+    const redirect = async () => {
+      const firstAccess = await Storage.getItem('@firstAccess');
+      if (!firstAccess) {
+        await Storage.setItem('@firstAccess', 'true');
+        navigationService.reset({ index: 0, routes: [{ name: 'onboarding' }] });
+      } else if (logged) {
+        navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
+      }
+    };
+    redirect();
+  }, [dispatch, logged]);
+
+  return (
+    <StartStack.Navigator screenOptions={{ headerShown: false }}>
+      <StartStack.Screen name="onboarding" component={OnBoarding} />
+      <StartStack.Screen name="login" component={LoginScreen} />
+      <StartStack.Screen name="forgot" component={ForgotPassword} />
+    </StartStack.Navigator>
+  );
+};
 
 const AppNavigator = () => (
   <MainStack.Navigator

@@ -7,11 +7,11 @@ import {
   MessageText,
 } from 'react-native-gifted-chat';
 import realTimeManager from '@mobile/services/chat-manager';
-import { useSelector } from 'react-redux';
+import { useReduxState } from '@mobile/hooks/useReduxState';
 import * as S from './ChatScreen.style';
 
 const ChatScreen: React.FC = () => {
-  const user = useSelector((state: any) => state.user.user);
+  const { user } = useReduxState().user;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const ChatScreen: React.FC = () => {
       placeholder="Digite sua mensagem aqui"
       onSend={onSend}
       locale={ptBr}
-      textInputStyle={S.InputStyle}
+      // textInputStyle={S.InputStyle}
       showAvatarForEveryMessage
       showUserAvatar
       renderUsernameOnMessage
