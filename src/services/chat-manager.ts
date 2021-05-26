@@ -1,5 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable consistent-return */
 import moment from 'moment-timezone';
 import realTime from './firebase-settings';
+
+const parse = (snapshot: any) => {
+  const { createdAt, text, user } = snapshot.val();
+  const { key: _id } = snapshot;
+  const message = { _id, createdAt, text, user };
+  return message;
+};
 
 const realTimeManager = {
   findUser: async (name: any) => {
@@ -36,13 +45,6 @@ const realTimeManager = {
   },
 };
 
-const parse = (snapshot: any) => {
-  const { createdAt, text, user } = snapshot.val();
-  const { key: _id } = snapshot;
-  const message = { _id, createdAt, text, user };
-  return message;
-};
-
 export const sanitizeObjectToArray = (obj: any) => {
   const verify = !obj || !obj.length <= 0;
   if (verify) return [];
@@ -55,9 +57,8 @@ export const sanitizeObjectToArray = (obj: any) => {
     }));
 };
 
-export const getParticipantUID = (userUID: string, participants: any) => {
-  return Object.keys(participants).filter((i) => i !== userUID);
-};
+export const getParticipantUID = (userUID: string, participants: any) =>
+  Object.keys(participants).filter((i) => i !== userUID);
 
 export class ChatService {
   static async getChat(chatId: string) {
@@ -71,6 +72,15 @@ export class ChatService {
     } catch (error) {
       console.log('ChatService.getChat', error);
     }
+  }
+
+  static async getChatParticipant(chatId: string, participantUID: string) {
+    const participant = await realTime
+      .database()
+      .ref(`/chats/${chatId}/participants/${participantUID}`)
+      .once('value');
+
+    return participant.val();
   }
 
   static async getChatMessage(
@@ -91,6 +101,106 @@ export class ChatService {
     } catch (error) {
       console.log('ChatService.getChatMessage', error);
     }
+  }
+
+  static async createChatMessage({
+    myUID,
+    chatId,
+    content,
+    idSender,
+  }: models.CreateChatType) {
+    const newChatMessageRef = realTime
+      .database()
+      .ref(`messages/${chatId}`)
+      .push();
+
+    const chat = await this.getChat(chatId);
+    const otherParticipantUID = getParticipantUID(myUID, chat.participants)[0];
+    const otherParticipantDetail = await this.getChatParticipant(
+      chatId,
+      otherParticipantUID
+    );
+
+    const updatedAtFormatted = moment().utc().format();
+
+    if (moment(updatedAtFormatted).isAfter(otherParticipantDetail.lastViewed)) {
+      await realTime
+        .database()
+        .ref(`/chats/${chatId}/participants/${otherParticipantUID}`)
+        .update({
+          unseenCount: otherParticipantDetail.unseenCount + 1,
+          lastViewed: updatedAtFormatted,
+        });
+    }
+
+    const updatedAt = moment().utc().format('X');
+    const message = {
+      content,
+      idSender,
+      sendAt: updatedAt,
+      sendAtFormatted: updatedAtFormatted,
+    };
+
+    await realTime.database().ref(`/chats/${chatId}`).update({
+      lastMessage: message,
+      updatedAt,
+      updatedAtFormatted,
+    });
+
+    return newChatMessageRef.set({ ...message });
+  }
+
+  static async updateChatParticipant(myUID: string, chatId: string) {
+    await realTime
+      .database()
+      .ref(`/chats/${chatId}/participants/${myUID}`)
+      .update({
+        unseenCount: 0,
+        lastViewed: moment().format(),
+      });
+  }
+
+  static async subscribeOnChatMessages(chatId: string, callback: any) {
+    return realTime
+      .database()
+      .ref(`messages/${chatId}`)
+      .limitToLast(1)
+      .on('child_added', (snapshot) =>
+        callback({
+          ...snapshot.val(),
+          id: snapshot.key,
+        })
+      );
+  }
+
+  static async subscribeOnUserChats(userId: string, callback: any) {
+    realTime
+      .database()
+      .ref('chats')
+      .orderByChild(`participants/${userId}/onChat`)
+      .equalTo(true)
+      .on('child_added', (snapshot) =>
+        callback({
+          ...snapshot.val(),
+          id: snapshot.key,
+        })
+      );
+
+    realTime
+      .database()
+      .ref('chats')
+      .orderByChild(`participants/${userId}/onChat`)
+      .equalTo(true)
+      .on('child_changed', (snapshot) =>
+        callback({
+          ...snapshot.val(),
+          id: snapshot.key,
+        })
+      );
+  }
+
+  static async unsubscribeOnChatMessages(chatId: string) {
+    realTime.database().ref(`messages/${chatId}`).off('child_added');
   }
 }
 

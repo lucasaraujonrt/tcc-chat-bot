@@ -1,58 +1,89 @@
-import React, { useState, useEffect } from 'react';
-import ptBr from 'dayjs/locale/pt-br';
-import {
-  GiftedChat,
-  Send,
-  Message,
-  MessageText,
-} from 'react-native-gifted-chat';
+import React, { useState, useEffect, useRef } from 'react';
+import { NativeScrollEvent, ScrollView } from 'react-native';
 import realTimeManager from '@mobile/services/chat-manager';
-import { useReduxState } from '@mobile/hooks/useReduxState';
+import navigationService from '@mobile/services/navigationService';
+import moment from 'moment-timezone';
+import Tony from '@mobile/assets/images/tony.png';
+
 import * as S from './ChatScreen.style';
 
 const ChatScreen: React.FC = () => {
-  const { user } = useReduxState().user;
-  const [messages, setMessages] = useState([]);
+  const ref = useRef<ScrollView | null>(null);
+  const [lastItemYPosition, setLastItemYPosition] = useState(0);
+  const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
 
-  useEffect(() => {
-    realTimeManager.updateMessages((message: any) => {
-      setMessages((prevState) => GiftedChat.append(prevState, message));
-    });
-  }, []);
+  const isCloseToTop = ({
+    layoutMeasurement,
+    contentOffset,
+  }: NativeScrollEvent) =>
+    layoutMeasurement.height + contentOffset.y <= layoutMeasurement.height;
 
-  const onSend = async (msgs: any) => {
-    msgs.forEach((element: any) => {
-      const { text, user } = element;
-      const message = { text, user, createdAt: new Date().getTime() };
-      realTimeManager.saveMessage(message);
-    });
+  const scrollViewPosition = (
+    lastItemPosition: number,
+    checkScrollToBottom: boolean
+  ) => {
+    if (checkScrollToBottom) {
+      ref.current?.scrollToEnd({ animated: true });
+    } else {
+      ref.current?.scrollTo({ y: lastItemPosition });
+    }
   };
 
-  // const renderSend = (props: any) => {
-  //   return (
-  //     <Send
-  //       {...props}
-  //       containerStyle={styles.sendContainer}
-  //     >
-  //       <SendIcon width={22.7} height={22.38} />
-  //     </Send>
-  //   );
-  // }
+  const renderDateDivisor = (index: number, message: any, chatList: any) => {
+    let response = false;
+    if (index === 0) {
+      response = true;
+    } else if (
+      !moment(message.sendAtFormatted).isSame(
+        chatList[index - 1].sendAtFormatted,
+        'day'
+      )
+    ) {
+      response = true;
+    }
+    return response;
+  };
 
   return (
-    <GiftedChat
-      messages={messages}
-      user={user}
-      placeholder="Digite sua mensagem aqui"
-      onSend={onSend}
-      locale={ptBr}
-      // textInputStyle={S.InputStyle}
-      showAvatarForEveryMessage
-      showUserAvatar
-      renderUsernameOnMessage
-      // renderMessage={renderMessage}
-      // renderMessageText={renderMessageText}
-    />
+    <>
+      <S.Container>
+        <S.WrapperHeader>
+          <S.WrapperGoBack onPress={navigationService.back}>
+            <S.IconArrow />
+          </S.WrapperGoBack>
+          <S.WrapperTony>
+            <S.TonyImage source={Tony} />
+          </S.WrapperTony>
+          <S.WrapperTonyInfo>
+            <S.TonyName>Tony IA</S.TonyName>
+            <S.TonyStatus>Online </S.TonyStatus>
+          </S.WrapperTonyInfo>
+          <S.WrapperHelp>
+            <S.IconHelp />
+          </S.WrapperHelp>
+        </S.WrapperHeader>
+        <S.PageContainerView>
+          <S.WrapperChat
+            ref={ref}
+            onContentSizeChange={() =>
+              scrollViewPosition(lastItemYPosition, scrollToBottom)
+            }
+            onScroll={({ nativeEvent }) => {
+              if (isCloseToTop(nativeEvent)) {
+              }
+            }}
+          >
+            <S.WrapperDateDivisor>
+              <S.DateDivisor>
+                {moment(new Date())
+                  .format('ddd[, ]DD[ ]MMM')
+                  .toLocaleUpperCase()}
+              </S.DateDivisor>
+            </S.WrapperDateDivisor>
+          </S.WrapperChat>
+        </S.PageContainerView>
+      </S.Container>
+    </>
   );
 };
 

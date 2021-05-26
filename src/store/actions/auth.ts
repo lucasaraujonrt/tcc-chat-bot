@@ -1,11 +1,39 @@
 /* eslint-disable consistent-return */
 import { Dispatch } from 'redux';
+import firebase from '@mobile/services/firebase-settings';
 import AuthApi from '@mobile/controllers/auth';
 import * as Storage from '@mobile/services/storage';
 import * as Message from '@mobile/services/message';
 import { startLoading, stopLoading } from './loading';
-import { ACTION_AUTH_LOGIN, ACTION_AUTH_LOGGED } from './actionTypes';
+import {
+  ACTION_AUTH_LOGIN,
+  ACTION_AUTH_LOGGED,
+  ACTION_SET_FIREBASE_USER,
+} from './actionTypes';
 import { getMe } from './user';
+
+export const loginFirebase = () => async (
+  dispatch: Dispatch,
+  getState: any
+) => {
+  dispatch(startLoading());
+  try {
+    const firebaseSignIn = await firebase
+      .auth()
+      .signInWithEmailAndPassword(
+        `${getState().user.me.id}@tony.app`,
+        `${getState().user.me.id}`
+      );
+    dispatch({
+      type: ACTION_SET_FIREBASE_USER,
+      payload: firebaseSignIn.user,
+    });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(stopLoading());
+  }
+};
 
 export const authenticate = (
   userData: models.AuthRequest,
@@ -22,6 +50,7 @@ export const authenticate = (
       await Storage.setItem('auth', 'true');
       await Storage.setAuthTokens(data.accessToken, data.refreshToken);
       dispatch(getMe());
+      dispatch(loginFirebase());
       callback(data);
     }
   } catch (error) {

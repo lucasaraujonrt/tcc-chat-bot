@@ -4,6 +4,7 @@ export const ACTION_AUTH_LOGIN = 'ACTION_AUTH_LOGIN';
 
 // user
 export const ACTION_SET_CHAT_USER = 'ACTION_SET_CHAT_USER';
+export const ACTION_SET_FIREBASE_USER = 'ACTION_SET_FIREBASE_USER';
 export const ACTION_USER_ME = 'ACTION_USER_ME';
 
 export type UserType = {

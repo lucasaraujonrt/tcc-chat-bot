@@ -22,3 +22,10 @@ export type MeResponse = {
   cellphone: string;
   profileType: number;
 };
+
+export type CreateChatType = {
+  myUID: string;
+  chatId: string;
+  content: string;
+  idSender: string;
+};
