@@ -1,16 +1,51 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NativeScrollEvent, ScrollView } from 'react-native';
-import realTimeManager from '@mobile/services/chat-manager';
+import { ChatService } from '@mobile/services/chat-manager';
 import navigationService from '@mobile/services/navigationService';
+import * as MessageService from '@mobile/services/message';
 import moment from 'moment-timezone';
 import Tony from '@mobile/assets/images/tony.png';
 
+import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './ChatScreen.style';
 
 const ChatScreen: React.FC = () => {
   const ref = useRef<ScrollView | null>(null);
   const [lastItemYPosition, setLastItemYPosition] = useState(0);
+  const [lastItemIndex, setLastItemIndex] = useState(0);
+  const [messages, setMessage] = useState<any>([]);
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
+  const [userUID, setUserUID] = useState<any>('');
+  const [messageInput, setMessageInput] = useState('');
+  const firebaseId = useReduxState().user.me?.firebaseToken;
+
+  useEffect(() => {
+    const getChatMessage = async () => {
+      const chatMessage = await ChatService.getChatMessage(
+        '-MXrRNMayobXVhTr2KmV'
+      );
+      setUserUID(firebaseId);
+      console.log('chatMessage', chatMessage);
+      // setMessage(chatMessage);
+    };
+
+    const subscribeChatMessage = async () => {
+      await ChatService.subscribeOnChatMessages(
+        '-MXrRNMayobXVhTr2KmV',
+        (snapshot) => {
+          if (!messages.some((message) => message.id === snapshot.id)) {
+            setMessage((prevState) => ({
+              messages: [...prevState.messages, snapshot],
+              scrollToBottom: true,
+            }));
+          }
+        }
+      );
+    };
+
+    getChatMessage();
+    // subscribeChatMessage();
+  }, [firebaseId, messages]);
 
   const isCloseToTop = ({
     layoutMeasurement,
@@ -44,6 +79,22 @@ const ChatScreen: React.FC = () => {
     return response;
   };
 
+  const onReachTop = () => {};
+
+  const handleSendMessage = async () => {
+    if (messageInput.trim() !== '') {
+      setMessageInput('');
+      await ChatService.createChatMessage({
+        myUID: userUID,
+        chatId: '-MXrRNMayobXVhTr2KmV',
+        content: messageInput,
+        idSender: userUID,
+      });
+    } else {
+      MessageService.message('Digite alguma coisa para enviar a mensagem');
+    }
+  };
+
   return (
     <>
       <S.Container>
@@ -70,17 +121,73 @@ const ChatScreen: React.FC = () => {
             }
             onScroll={({ nativeEvent }) => {
               if (isCloseToTop(nativeEvent)) {
+                onReachTop();
               }
             }}
           >
-            <S.WrapperDateDivisor>
-              <S.DateDivisor>
-                {moment(new Date())
-                  .format('ddd[, ]DD[ ]MMM')
-                  .toLocaleUpperCase()}
-              </S.DateDivisor>
-            </S.WrapperDateDivisor>
+            {messages.length > 0
+              ? messages.map((message: any, index: number) => (
+                  <>
+                    {renderDateDivisor(index, message, messages) && (
+                      <S.WrapperDateDivisor>
+                        <S.DateDivisor>
+                          {moment(message.sendAtFormatted)
+                            .format('ddd[, ]DD[ ]MMM')
+                            .toLocaleUpperCase()}
+                        </S.DateDivisor>
+                      </S.WrapperDateDivisor>
+                    )}
+                    <S.ChatMessageView
+                      key={index.toString()}
+                      isSender={userUID === message.idSender}
+                      onLayout={(event) => {
+                        if (index === lastItemIndex) {
+                          setLastItemIndex(event.nativeEvent.layout.y);
+                        }
+                      }}
+                    >
+                      {userUID === message.idSender ? (
+                        <>
+                          <S.ChatMessageTimeText
+                            isSender={userUID === message.idSender}
+                          >
+                            {moment(message.sendAtFormatted).format('H[:]mm')}
+                          </S.ChatMessageTimeText>
+                          <S.OtherUserMessageContainer>
+                            <S.MineMessage>{message.content}</S.MineMessage>
+                          </S.OtherUserMessageContainer>
+                        </>
+                      ) : (
+                        <>
+                          <S.MineMessageContainer>
+                            <S.OtherUserMessage>
+                              {message.content}
+                            </S.OtherUserMessage>
+                          </S.MineMessageContainer>
+                          <S.ChatMessageTimeText
+                            isSender={userUID === message.idSender}
+                          >
+                            {moment(message.sendAtFormatted).format('H[:]mm')}
+                          </S.ChatMessageTimeText>
+                        </>
+                      )}
+                    </S.ChatMessageView>
+                  </>
+                ))
+              : null}
           </S.WrapperChat>
+          <S.WrapperChatContainer>
+            <S.ChatInput
+              value={messageInput}
+              onChangeText={setMessageInput}
+              placeholder="Digite sua mensagem aqui"
+              multiline
+              maxLength={200}
+            />
+            <S.WrapperSendButton>
+              <S.IconSendMessage onPress={handleSendMessage} />
+            </S.WrapperSendButton>
+          </S.WrapperChatContainer>
         </S.PageContainerView>
       </S.Container>
     </>

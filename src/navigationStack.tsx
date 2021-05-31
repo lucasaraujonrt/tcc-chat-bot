@@ -57,6 +57,8 @@ const StartNavigator = () => {
         navigationService.reset({ index: 0, routes: [{ name: 'onboarding' }] });
       } else if (logged) {
         navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
+      } else {
+        navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
       }
     };
     redirect();

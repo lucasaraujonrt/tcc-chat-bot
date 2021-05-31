@@ -17,19 +17,22 @@ export const loginFirebase = () => async (
   getState: any
 ) => {
   dispatch(startLoading());
+  console.log('getState().user.me.email', getState().user.me.email);
+  console.log('getState().user.me.email', getState().user.me.id);
   try {
     const firebaseSignIn = await firebase
       .auth()
       .signInWithEmailAndPassword(
-        `${getState().user.me.id}@tony.app`,
+        `${getState().user.me.email}`,
         `${getState().user.me.id}`
       );
     dispatch({
       type: ACTION_SET_FIREBASE_USER,
       payload: firebaseSignIn.user,
     });
+    console.log('firebaseSignIn', firebaseSignIn);
   } catch (error) {
-    console.log(error);
+    console.log('loginFirebase', error);
   } finally {
     dispatch(stopLoading());
   }
@@ -50,7 +53,6 @@ export const authenticate = (
       await Storage.setItem('auth', 'true');
       await Storage.setAuthTokens(data.accessToken, data.refreshToken);
       dispatch(getMe());
-      dispatch(loginFirebase());
       callback(data);
     }
   } catch (error) {

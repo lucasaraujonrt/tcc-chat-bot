@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HomeFirstRow, HomeSecondRow } from '@mobile/helpers/array/home';
 import navigationService from '@mobile/services/navigationService';
 import useReduxState from '@mobile/hooks/useReduxState';
+import { useDispatch } from 'react-redux';
+import { loginFirebase } from '@mobile/store/actions/auth';
 import * as S from './HomeScreen.style';
 
 const Home: React.FC = () => {
   const { me } = useReduxState().user;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loginFirebase());
+  }, [dispatch]);
 
   return (
     <S.Container>

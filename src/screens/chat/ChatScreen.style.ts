@@ -3,6 +3,11 @@ import * as Window from '@mobile/services/dimensionsService';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { color, font } from '@mobile/config/theme.json';
 import Arrow from '@mobile/assets/svg/header/ic_arrow_back.svg';
+import SendMessage from '@mobile/assets/svg/chat/ic_sendMessage.svg';
+
+interface IProps {
+  isSender?: boolean;
+}
 
 export const Container = styled.View`
   flex: 1;
@@ -61,6 +66,8 @@ export const IconHelp = styled(MaterialIcons).attrs({
   size: 32,
 })``;
 
+// chats style
+
 export const WrapperChat = styled.ScrollView`
   width: 100%;
 `;
@@ -88,3 +95,92 @@ export const DateDivisor = styled.Text`
   text-align: center;
   margin: 1% 5%;
 `;
+
+export const ChatMessageView = styled.View`
+  flex-direction: row;
+  align-self: ${(props: IProps) =>
+    props.isSender ? 'flex-end' : 'flex-start'};
+`;
+
+export const ChatMessageTimeText = styled.Text`
+  font-family: ${font.medium};
+  font-size: ${`${Window.winHeight * 0.015}px`};
+  line-height: ${`${Window.winHeight * 0.02}px`};
+  color: ${color.baby_gray};
+  align-self: flex-end;
+  margin-bottom: 2%;
+  margin-right: ${(props: IProps) => (props.isSender ? '2%' : '0')};
+  margin-left: ${(props: IProps) => (props.isSender ? '0' : '2%')};
+`;
+
+export const OtherUserMessageContainer = styled.View`
+  margin: 2% 2%;
+  background-color: ${color.rose_quartz};
+  margin-left: 6%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  max-width: 75%;
+`;
+
+export const MineMessage = styled.Text`
+  padding: 2% 5%;
+  font-family: ${font.regular};
+  font-size: ${`${Window.winHeight * 0.019}px`};
+  line-height: ${`${Window.winHeight * 0.03}px`};
+  color: ${color.white};
+`;
+
+export const MineMessageContainer = styled.View`
+  margin: 2%;
+  background-color: ${color.rose_quartz};
+  margin-left: 2%;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+`;
+
+export const OtherUserMessage = styled.Text`
+  padding: 2% 5%;
+  font-family: ${font.regular};
+  font-size: ${`${Window.winHeight * 0.019}px`};
+  line-height: ${`${Window.winHeight * 0.03}px`};
+  color: ${color.primary};
+`;
+
+export const WrapperChatContainer = styled.View`
+  flex-direction: row;
+  padding: ${`${Window.heightScale(0.01)}px`} ${`${Window.widthScale(0.01)}px`};
+  align-items: center;
+  width: 100%;
+`;
+
+export const ChatInput = styled.TextInput.attrs({
+  placeholderTextColor: color.dark_gray,
+})`
+  background-color: ${color.rose_quartz};
+  border-radius: 500px;
+  width: 88%;
+  max-height: ${Window.winHeight * 0.1};
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: ${Window.widthScale(0.025)}px;
+  color: ${color.dark_gray};
+  font-family: ${font.medium};
+`;
+
+export const WrapperSendButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7,
+})`
+  width: ${Window.widthScale(0.1)}px;
+  height: ${Window.heightScale(0.05)}px;
+  background-color: ${color.second};
+  border-radius: ${Window.winHeight * 0.025}px;
+  margin-left: ${Window.widthScale(0.01)}px;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+`;
+
+export const IconSendMessage = styled(SendMessage)``;
