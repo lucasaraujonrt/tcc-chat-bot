@@ -1,4 +1,5 @@
 import UserApi from '@mobile/controllers/user';
+import Analytics from 'appcenter-analytics';
 import { Dispatch } from 'redux';
 import { ACTION_SET_CHAT_USER, ACTION_USER_ME } from './actionTypes';
 import { startLoading, stopLoading } from './loading';
@@ -24,6 +25,7 @@ export const getMe = () => async (dispatch: Dispatch) => {
     }
   } catch (error) {
     console.log('user get me', error);
+    Analytics.trackEvent(`Error in getMe ${error}`, { ErrorEvent: error });
   } finally {
     dispatch(stopLoading());
   }

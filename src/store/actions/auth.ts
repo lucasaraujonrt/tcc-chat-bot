@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { Dispatch } from 'redux';
+import Analytics from 'appcenter-analytics';
 import firebase from '@mobile/services/firebase-settings';
 import AuthApi from '@mobile/controllers/auth';
 import * as Storage from '@mobile/services/storage';
@@ -32,6 +33,7 @@ export const loginFirebase = () => async (
     });
     console.log('firebaseSignIn', firebaseSignIn);
   } catch (error) {
+    Analytics.trackEvent(`Error in firebase login`, { ErrorEvent: error });
     console.log('loginFirebase', error);
   } finally {
     dispatch(stopLoading());
@@ -59,6 +61,7 @@ export const authenticate = (
     if (error.message === 'INVALID_PASSWORD') {
       return Message.error('Senha inválida');
     }
+    Analytics.trackEvent(`Error in login ${error}`, { ErrorEvent: error });
   } finally {
     dispatch(stopLoading());
   }
@@ -74,6 +77,7 @@ export const changePassword = (
     callback(true);
   } catch (error) {
     callback(false);
+    Analytics.trackEvent(`Error in changePassword`, { ErrorEvent: error });
   } finally {
     dispatch(stopLoading());
   }
@@ -89,6 +93,7 @@ export const passwordRecovery = (
     callback(true);
   } catch (error) {
     callback(false);
+    Analytics.trackEvent(`Error in passwordRecovery`, { ErrorEvent: error });
   } finally {
     dispatch(stopLoading());
   }
