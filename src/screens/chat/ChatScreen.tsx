@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NativeScrollEvent, ScrollView } from 'react-native';
+import { NativeScrollEvent, ScrollView, LogBox, Keyboard } from 'react-native';
+import moment from 'moment-timezone';
 import { ChatService } from '@mobile/services/chat-manager';
 import navigationService from '@mobile/services/navigationService';
 import * as MessageService from '@mobile/services/message';
-import moment from 'moment-timezone';
 import Tony from '@mobile/assets/images/tony.png';
 
 import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './ChatScreen.style';
+
+LogBox.ignoreAllLogs();
+
+moment.locale('pt-BR');
 
 const ChatScreen: React.FC = () => {
   const ref = useRef<ScrollView | null>(null);
@@ -24,20 +28,20 @@ const ChatScreen: React.FC = () => {
       const chatMessage = await ChatService.getChatMessage(
         '-MXrRNMayobXVhTr2KmV'
       );
-      setUserUID(firebaseId);
-      console.log('chatMessage', chatMessage);
-      // setMessage(chatMessage);
+      setUserUID('XJokcueMHPcbT4UcNlCpAVlQqfo2');
+      setMessage(chatMessage);
     };
 
     const subscribeChatMessage = async () => {
       await ChatService.subscribeOnChatMessages(
         '-MXrRNMayobXVhTr2KmV',
         (snapshot) => {
-          if (!messages.some((message) => message.id === snapshot.id)) {
-            setMessage((prevState) => ({
-              messages: [...prevState.messages, snapshot],
-              scrollToBottom: true,
-            }));
+          if (!messages.some((message: any) => message.id === snapshot.id)) {
+            const payload = {
+              messages: [...messages, snapshot],
+            };
+            setMessage(payload);
+            setScrollToBottom(true);
           }
         }
       );
@@ -84,6 +88,7 @@ const ChatScreen: React.FC = () => {
   const handleSendMessage = async () => {
     if (messageInput.trim() !== '') {
       setMessageInput('');
+      Keyboard.dismiss();
       await ChatService.createChatMessage({
         myUID: userUID,
         chatId: '-MXrRNMayobXVhTr2KmV',

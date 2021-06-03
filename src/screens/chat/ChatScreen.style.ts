@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Window from '@mobile/services/dimensionsService';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { color, font } from '@mobile/config/theme.json';
@@ -56,7 +57,9 @@ export const TonyStatus = styled.Text`
   font-size: ${Window.fontScale(10)}px;
 `;
 
-export const WrapperHelp = styled.View`
+export const WrapperHelp = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7,
+})`
   margin-left: ${Window.widthScale(0.3)}px;
 `;
 
@@ -66,21 +69,24 @@ export const IconHelp = styled(MaterialIcons).attrs({
   size: 32,
 })``;
 
-// chats style
+// chat style
 
-export const WrapperChat = styled.ScrollView`
+export const WrapperChat = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  keyboardShouldPersistTaps: 'handled',
+})`
   width: 100%;
 `;
 
 export const PageContainerView = styled.View`
+  flex: 1;
   justify-content: center;
   align-items: center;
-  flex: 1;
   height: ${`${Window.winHeight * 0.9 - 1}px`};
   width: 100%;
   background-color: ${color.cream};
-  border-top-left-radius: ${Window.widthScale(0.07)}px;
-  border-top-right-radius: ${Window.widthScale(0.07)}px;
+  border-top-left-radius: ${Window.widthScale(0.05)}px;
+  border-top-right-radius: ${Window.widthScale(0.05)}px;
 `;
 
 export const WrapperDateDivisor = styled.View`
@@ -88,10 +94,11 @@ export const WrapperDateDivisor = styled.View`
 `;
 
 export const DateDivisor = styled.Text`
-  font-family: ${font.regular};
-  font-size: ${`${Window.winHeight * 0.02}px`};
+  font-family: ${font.medium};
+  font-size: ${Window.fontScale(12)}px;
   line-height: ${`${Window.winHeight * 0.025}px`};
-  color: ${color.baby_gray};
+  color: black;
+  opacity: 0.6;
   text-align: center;
   margin: 1% 5%;
 `;
@@ -106,20 +113,21 @@ export const ChatMessageTimeText = styled.Text`
   font-family: ${font.medium};
   font-size: ${`${Window.winHeight * 0.015}px`};
   line-height: ${`${Window.winHeight * 0.02}px`};
-  color: ${color.baby_gray};
+  color: black;
+  opacity: 0.5;
   align-self: flex-end;
   margin-bottom: 2%;
-  margin-right: ${(props: IProps) => (props.isSender ? '2%' : '0')};
-  margin-left: ${(props: IProps) => (props.isSender ? '0' : '2%')};
+  margin-right: ${(props: IProps) => (props.isSender ? '1%' : '0')};
+  margin-left: ${(props: IProps) => (props.isSender ? '0' : '1%')};
 `;
 
 export const OtherUserMessageContainer = styled.View`
-  margin: 2% 2%;
-  background-color: ${color.rose_quartz};
-  margin-left: 6%;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+  margin: ${Window.heightScale(0.01)}px ${Window.widthScale(0.025)}px;
+  background-color: ${color.primary};
+  margin-left: ${Window.widthScale(0.005)}px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
   max-width: 75%;
 `;
 
@@ -134,10 +142,10 @@ export const MineMessage = styled.Text`
 export const MineMessageContainer = styled.View`
   margin: 2%;
   background-color: ${color.rose_quartz};
-  margin-left: 2%;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+  margin-left: ${Window.widthScale(0.02)}px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
 `;
 
 export const OtherUserMessage = styled.Text`
@@ -150,24 +158,27 @@ export const OtherUserMessage = styled.Text`
 
 export const WrapperChatContainer = styled.View`
   flex-direction: row;
-  padding: ${`${Window.heightScale(0.01)}px`} ${`${Window.widthScale(0.01)}px`};
+  padding: ${`${Window.heightScale(0.015)}px`} ${`${Window.widthScale(0.01)}px`};
   align-items: center;
   width: 100%;
+  background-color: transparent;
 `;
 
 export const ChatInput = styled.TextInput.attrs({
-  placeholderTextColor: color.dark_gray,
+  placeholderTextColor: color.primary,
 })`
   background-color: ${color.rose_quartz};
-  border-radius: 500px;
+  border-radius: 30px;
   width: 88%;
   max-height: ${Window.winHeight * 0.1};
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-left: ${Window.widthScale(0.025)}px;
-  color: ${color.dark_gray};
+  padding-left: ${Window.widthScale(0.035)}px;
+  color: ${color.primary};
   font-family: ${font.medium};
+  font-size: ${Window.fontScale(14)}px;
+  text-decoration: none;
 `;
 
 export const WrapperSendButton = styled.TouchableOpacity.attrs({
