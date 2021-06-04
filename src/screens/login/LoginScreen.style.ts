@@ -21,7 +21,7 @@ export const WrapperContainer = styled.View`
 
 export const WrapperLogo = styled.View`
   width: ${Window.widthScale(1)}px;
-  height: ${Window.heightScale(0.35)}px;
+  height: ${Window.heightScale(0.3)}px;
   justify-content: center;
   align-items: center;
 `;

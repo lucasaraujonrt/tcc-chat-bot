@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { font } from '@mobile/config/theme.json';
 import { InputType } from '../../enum/inputType';
 import * as S from './Input.style';
 
@@ -65,6 +66,9 @@ const Input = ({
         keyboardType={keyboardType}
         editable={!disabled}
         maxLength={maxLength}
+        ref={(ref) =>
+          ref && ref.setNativeProps({ style: { fontFamily: font.regular } })
+        }
       />
       {password && (
         <S.WrapperPassword onPress={() => setShowPassword(!showPassword)}>

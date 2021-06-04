@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import * as Storage from './services/storage';
 import navigationService, { createStack } from './services/navigationService';
+// eslint-disable-next-line import/no-named-as-default
 import useReduxState from './hooks/useReduxState';
 import ForgotPassword from './screens/forgot-password';
 import Home from './screens/home';
@@ -55,6 +56,8 @@ const StartNavigator = () => {
         await Storage.setItem('@firstAccess', 'true');
         navigationService.reset({ index: 0, routes: [{ name: 'onboarding' }] });
       } else if (logged) {
+        navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
+      } else {
         navigationService.reset({ index: 0, routes: [{ name: 'login' }] });
       }
     };

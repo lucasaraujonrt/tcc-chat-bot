@@ -18,6 +18,7 @@ export const getInstance = async () => {
   axiosInstance.interceptors.request.use(
     (request: AxiosRequestConfig) => request
   );
+
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => response,
     async (err) => {

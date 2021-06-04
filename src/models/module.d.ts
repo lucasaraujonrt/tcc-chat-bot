@@ -21,4 +21,12 @@ export type MeResponse = {
   email: string;
   cellphone: string;
   profileType: number;
+  firebaseToken: string;
+};
+
+export type CreateChatType = {
+  myUID: string;
+  chatId: string;
+  content: string;
+  idSender: string;
 };
