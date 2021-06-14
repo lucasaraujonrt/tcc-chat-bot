@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Window from '@mobile/services/dimensionsService';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { color, font } from '@mobile/config/theme.json';

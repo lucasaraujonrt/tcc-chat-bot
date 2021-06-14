@@ -16,8 +16,10 @@ moment.locale('pt-BR');
 const ChatScreen: React.FC = () => {
   const ref = useRef<ScrollView | null>(null);
   const [lastItemYPosition, setLastItemYPosition] = useState(0);
+  const [offset, setOffset] = useState<any>([]);
+  const [reachLimit, setReachLimit] = useState<any>(false);
   const [lastItemIndex, setLastItemIndex] = useState(0);
-  const [messages, setMessage] = useState<any>([]);
+  const [messages, setMessages] = useState<any>([]);
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
   const [userUID, setUserUID] = useState<any>('');
   const [messageInput, setMessageInput] = useState('');
@@ -29,27 +31,28 @@ const ChatScreen: React.FC = () => {
         '-MXrRNMayobXVhTr2KmV'
       );
       setUserUID('XJokcueMHPcbT4UcNlCpAVlQqfo2');
-      setMessage(chatMessage);
+      setMessages(chatMessage);
+      setReachLimit(chatMessage && chatMessage?.length < 15);
     };
+    getChatMessage();
+  }, [firebaseId]);
 
+  useEffect(() => {
     const subscribeChatMessage = async () => {
       await ChatService.subscribeOnChatMessages(
         '-MXrRNMayobXVhTr2KmV',
-        (snapshot) => {
+        (snapshot: any) => {
           if (!messages.some((message: any) => message.id === snapshot.id)) {
-            const payload = {
-              messages: [...messages, snapshot],
-            };
-            setMessage(payload);
-            setScrollToBottom(true);
+            setMessages([...messages, snapshot]);
           }
         }
       );
+      if (messages.length > 0) {
+        setOffset([messages[0].sendAt]);
+      }
     };
-
-    getChatMessage();
-    // subscribeChatMessage();
-  }, [firebaseId, messages]);
+    subscribeChatMessage();
+  }, [messages]);
 
   const isCloseToTop = ({
     layoutMeasurement,
@@ -83,7 +86,15 @@ const ChatScreen: React.FC = () => {
     return response;
   };
 
-  const onReachTop = () => {};
+  const onReachTop = async () => {
+    let newChatMessage: any = await ChatService.getChatMessage(userUID, offset);
+    const limit = newChatMessage.length < 15;
+    newChatMessage = newChatMessage?.concat(messages);
+    setOffset([newChatMessage[0].sendAt]);
+    setMessages(newChatMessage);
+    setReachLimit(limit);
+    setScrollToBottom(false);
+  };
 
   const handleSendMessage = async () => {
     if (messageInput.trim() !== '') {
@@ -125,7 +136,7 @@ const ChatScreen: React.FC = () => {
               scrollViewPosition(lastItemYPosition, scrollToBottom)
             }
             onScroll={({ nativeEvent }) => {
-              if (isCloseToTop(nativeEvent)) {
+              if (isCloseToTop(nativeEvent) && !reachLimit) {
                 onReachTop();
               }
             }}
