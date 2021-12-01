@@ -10,6 +10,7 @@
     "ios": "react-native run-ios",
     "android:clean-mac": "cd android && ./gradlew clean && cd ..",
     "android:mac": "yarn run android:clean-mac && react-native run-android",
+    "pods:m1": "cd ios && arch -x86_64 pod install && cd ..",
     "pod-ios": "cd ios && pod install && cd .. && react-native run-ios",
     "android-release:ios": "yarn run android:clean-mac && npx react-native run-android --variant=release",
     "test": "jest",

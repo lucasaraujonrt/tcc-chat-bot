@@ -2,9 +2,9 @@ import React from 'react';
 import * as S from './KeyboardAvoiding.style';
 
 interface IKeyboardAvoiding {
-  padding?: number,
-  children?: JSX.Element | JSX.Element[]
-  background?: string,
+  padding?: number;
+  children?: React.ReactNode;
+  background?: string;
 }
 
 const KeyboardAvoiding = ({
@@ -16,7 +16,7 @@ const KeyboardAvoiding = ({
     <S.KeyboardAvoidingContainer background={background} padding={padding}>
       {children}
     </S.KeyboardAvoidingContainer>
-  )
-}
+  );
+};
 
 export default KeyboardAvoiding;

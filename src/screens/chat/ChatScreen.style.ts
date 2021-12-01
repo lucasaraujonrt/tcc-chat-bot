@@ -145,6 +145,7 @@ export const MineMessageContainer = styled.View`
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   border-bottom-left-radius: 25px;
+  max-width: 75%;
 `;
 
 export const OtherUserMessage = styled.Text`

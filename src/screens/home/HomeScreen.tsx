@@ -4,21 +4,30 @@ import navigationService from '@mobile/services/navigationService';
 import useReduxState from '@mobile/hooks/useReduxState';
 import { useDispatch } from 'react-redux';
 import { loginFirebase } from '@mobile/store/actions/auth';
+import { useNavigation } from '@react-navigation/native';
 import * as S from './HomeScreen.style';
 
 const Home: React.FC = () => {
   const { me } = useReduxState().user;
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    navigation.addListener('focus', () => {
+      console.log('entruie');
+      dispatch(loginFirebase());
+    });
+  }, [dispatch, navigation]);
+
+  const test = () => {
     dispatch(loginFirebase());
-  }, [dispatch]);
+  };
 
   return (
     <S.Container>
       <S.HeaderHome>
         <S.WrapperLogo />
-        <S.WrapperIconNotification>
+        <S.WrapperIconNotification onPress={test}>
           <S.IconNotification />
           <S.BadgeNotification>
             <S.BadgeCount>10</S.BadgeCount>
