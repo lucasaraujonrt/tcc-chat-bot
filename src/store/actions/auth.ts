@@ -17,9 +17,9 @@ export const loginFirebase = () => async (
   dispatch: Dispatch,
   getState: any
 ) => {
-  dispatch(startLoading());
   console.log('getState().user.me.email', getState().user.me.email);
   console.log('getState().user.me.email', getState().user.me.id);
+  dispatch(startLoading());
   try {
     const firebaseSignIn = await firebase
       .auth()
@@ -108,6 +108,7 @@ export const checkLogin = () => async (dispatch: Dispatch<any>) => {
       payload: true,
     });
     dispatch(getMe());
+    dispatch(loginFirebase());
   }
   dispatch(stopLoading());
 };

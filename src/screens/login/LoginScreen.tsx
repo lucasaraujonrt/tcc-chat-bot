@@ -10,7 +10,7 @@ import { authenticate } from '@mobile/store/actions/auth';
 import Tony from '@mobile/assets/images/ic_logo_tony.svg';
 import * as Window from '@mobile/services/dimensionsService';
 
-// import useReduxState from '@mobile/hooks/useReduxState';
+import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './LoginScreen.style';
 
 const Login: React.FC = () => {
@@ -31,7 +31,6 @@ const Login: React.FC = () => {
     if (password.length < 6 || password.trim() === '') {
       return MessageService.error('Digite uma senha válida');
     }
-    setLoading(true);
     dispatch(
       authenticate({ email, password }, (data) => {
         if (data) {
@@ -39,7 +38,6 @@ const Login: React.FC = () => {
         }
       })
     );
-    setLoading(false);
   };
 
   return (

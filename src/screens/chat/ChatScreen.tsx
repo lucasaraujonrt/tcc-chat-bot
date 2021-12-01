@@ -16,7 +16,7 @@ moment.locale('pt-BR');
 
 const ChatScreen: React.FC = () => {
   const ref = useRef<ScrollView | null>(null);
-  const [lastItemYPosition, setLastItemYPosition] = useState(0);
+  const [lastItemYPosition] = useState(0);
   const [offset, setOffset] = useState<any>([]);
   const [reachLimit, setReachLimit] = useState<any>(false);
   const [lastItemIndex, setLastItemIndex] = useState(0);
@@ -113,104 +113,99 @@ const ChatScreen: React.FC = () => {
   };
 
   return (
-    <>
-      <S.Container>
-        <S.WrapperHeader>
-          <S.WrapperGoBack onPress={navigationService.back}>
-            <S.IconArrow />
-          </S.WrapperGoBack>
-          <S.WrapperTony>
-            <Tony
-              width={Window.widthScale(0.1)}
-              height={Window.heightScale(0.06)}
-            />
-          </S.WrapperTony>
-          <S.WrapperTonyInfo>
-            <S.TonyName>Tony IA</S.TonyName>
-            <S.TonyStatus>Online </S.TonyStatus>
-          </S.WrapperTonyInfo>
-          <S.WrapperHelp>
-            <S.IconHelp />
-          </S.WrapperHelp>
-        </S.WrapperHeader>
-        <S.PageContainerView>
-          <S.WrapperChat
-            ref={ref}
-            onContentSizeChange={() =>
-              scrollViewPosition(lastItemYPosition, scrollToBottom)
+    <S.Container>
+      <S.WrapperHeader>
+        <S.WrapperGoBack onPress={navigationService.back}>
+          <S.IconArrow />
+        </S.WrapperGoBack>
+        <S.WrapperTony>
+          <S.TonyImage source={Tony} />
+        </S.WrapperTony>
+        <S.WrapperTonyInfo>
+          <S.TonyName>Tony IA</S.TonyName>
+          <S.TonyStatus>Online </S.TonyStatus>
+        </S.WrapperTonyInfo>
+        <S.WrapperHelp>
+          <S.IconHelp />
+        </S.WrapperHelp>
+      </S.WrapperHeader>
+      <S.PageContainerView>
+        <S.WrapperChat
+          ref={ref}
+          onContentSizeChange={() =>
+            scrollViewPosition(lastItemYPosition, scrollToBottom)
+          }
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToTop(nativeEvent) && !reachLimit) {
+              onReachTop();
             }
-            onScroll={({ nativeEvent }) => {
-              if (isCloseToTop(nativeEvent) && !reachLimit) {
-                onReachTop();
-              }
-            }}
-          >
-            {messages.length > 0
-              ? messages.map((message: any, index: number) => (
-                  <>
-                    {renderDateDivisor(index, message, messages) && (
-                      <S.WrapperDateDivisor>
-                        <S.DateDivisor>
-                          {moment(message.sendAtFormatted)
-                            .format('ddd[, ]DD[ ]MMM')
-                            .toLocaleUpperCase()}
-                        </S.DateDivisor>
-                      </S.WrapperDateDivisor>
+          }}
+        >
+          {messages.length > 0
+            ? messages.map((message: any, index: number) => (
+                <>
+                  {renderDateDivisor(index, message, messages) && (
+                    <S.WrapperDateDivisor>
+                      <S.DateDivisor>
+                        {moment(message.sendAtFormatted)
+                          .format('ddd[, ]DD[ ]MMM')
+                          .toLocaleUpperCase()}
+                      </S.DateDivisor>
+                    </S.WrapperDateDivisor>
+                  )}
+                  <S.ChatMessageView
+                    key={index.toString()}
+                    isSender={userUID === message.idSender}
+                    onLayout={(event) => {
+                      if (index === lastItemIndex) {
+                        setLastItemIndex(event.nativeEvent.layout.y);
+                      }
+                    }}
+                  >
+                    {userUID === message.idSender ? (
+                      <>
+                        <S.ChatMessageTimeText
+                          isSender={userUID === message.idSender}
+                        >
+                          {moment(message.sendAtFormatted).format('H[:]mm')}
+                        </S.ChatMessageTimeText>
+                        <S.OtherUserMessageContainer>
+                          <S.MineMessage>{message.content}</S.MineMessage>
+                        </S.OtherUserMessageContainer>
+                      </>
+                    ) : (
+                      <>
+                        <S.MineMessageContainer>
+                          <S.OtherUserMessage>
+                            {message.content}
+                          </S.OtherUserMessage>
+                        </S.MineMessageContainer>
+                        <S.ChatMessageTimeText
+                          isSender={userUID === message.idSender}
+                        >
+                          {moment(message.sendAtFormatted).format('H[:]mm')}
+                        </S.ChatMessageTimeText>
+                      </>
                     )}
-                    <S.ChatMessageView
-                      key={index.toString()}
-                      isSender={userUID === message.idSender}
-                      onLayout={(event) => {
-                        if (index === lastItemIndex) {
-                          setLastItemIndex(event.nativeEvent.layout.y);
-                        }
-                      }}
-                    >
-                      {userUID === message.idSender ? (
-                        <>
-                          <S.ChatMessageTimeText
-                            isSender={userUID === message.idSender}
-                          >
-                            {moment(message.sendAtFormatted).format('H[:]mm')}
-                          </S.ChatMessageTimeText>
-                          <S.OtherUserMessageContainer>
-                            <S.MineMessage>{message.content}</S.MineMessage>
-                          </S.OtherUserMessageContainer>
-                        </>
-                      ) : (
-                        <>
-                          <S.MineMessageContainer>
-                            <S.OtherUserMessage>
-                              {message.content}
-                            </S.OtherUserMessage>
-                          </S.MineMessageContainer>
-                          <S.ChatMessageTimeText
-                            isSender={userUID === message.idSender}
-                          >
-                            {moment(message.sendAtFormatted).format('H[:]mm')}
-                          </S.ChatMessageTimeText>
-                        </>
-                      )}
-                    </S.ChatMessageView>
-                  </>
-                ))
-              : null}
-          </S.WrapperChat>
-          <S.WrapperChatContainer>
-            <S.ChatInput
-              value={messageInput}
-              onChangeText={setMessageInput}
-              placeholder="Digite sua mensagem aqui"
-              multiline
-              maxLength={200}
-            />
-            <S.WrapperSendButton>
-              <S.IconSendMessage onPress={handleSendMessage} />
-            </S.WrapperSendButton>
-          </S.WrapperChatContainer>
-        </S.PageContainerView>
-      </S.Container>
-    </>
+                  </S.ChatMessageView>
+                </>
+              ))
+            : null}
+        </S.WrapperChat>
+        <S.WrapperChatContainer>
+          <S.ChatInput
+            value={messageInput}
+            onChangeText={setMessageInput}
+            placeholder="Digite sua mensagem aqui"
+            multiline
+            maxLength={200}
+          />
+          <S.WrapperSendButton>
+            <S.IconSendMessage onPress={handleSendMessage} />
+          </S.WrapperSendButton>
+        </S.WrapperChatContainer>
+      </S.PageContainerView>
+    </S.Container>
   );
 };
 
