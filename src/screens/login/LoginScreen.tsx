@@ -7,6 +7,8 @@ import navigationService from '@mobile/services/navigationService';
 import * as MessageService from '@mobile/services/message';
 import { useDispatch } from 'react-redux';
 import { authenticate } from '@mobile/store/actions/auth';
+import Tony from '@mobile/assets/images/ic_logo_tony.svg';
+import * as Window from '@mobile/services/dimensionsService';
 
 import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './LoginScreen.style';
@@ -20,6 +22,8 @@ const Login: React.FC = () => {
 
   const handleSubmit = () => {
     const validateEmail = EmailValidator.validate(email);
+    navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
+
     if (!validateEmail) {
       return MessageService.error('E-mail inválido');
     }
@@ -41,7 +45,10 @@ const Login: React.FC = () => {
       <S.Container>
         <S.WrapperContainer>
           <S.WrapperLogo>
-            <S.TextLogo link>Logo aqui</S.TextLogo>
+            <Tony
+              width={Window.widthScale(0.25)}
+              height={Window.heightScale(0.2)}
+            />
           </S.WrapperLogo>
           <S.SubContainer>
             <S.TextLogo bold>Seja bem vindo!</S.TextLogo>

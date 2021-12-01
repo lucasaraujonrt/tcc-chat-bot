@@ -4,7 +4,8 @@ import moment from 'moment-timezone';
 import { ChatService } from '@mobile/services/chat-manager';
 import navigationService from '@mobile/services/navigationService';
 import * as MessageService from '@mobile/services/message';
-import Tony from '@mobile/assets/images/tony.png';
+import Tony from '@mobile/assets/images/ic_logo_tony.svg';
+import * as Window from '@mobile/services/dimensionsService';
 
 import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './ChatScreen.style';
