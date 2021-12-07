@@ -14,6 +14,8 @@ import OnBoarding from './screens/on-boarding';
 import Chat from './screens/chat';
 import Dummy from './screens/dummy';
 import { checkLogin } from './store/actions/auth';
+import Profile from './screens/profile';
+import Support from './screens/support';
 
 const MainStack = createStack();
 const ContentStack = createStack();
@@ -35,6 +37,14 @@ const routeList: Array<{ name: string; component: ReactElement }> = [
   {
     name: 'form',
     component: <ContentStack.Screen name="form" component={FormScreen} />,
+  },
+  {
+    name: 'profile',
+    component: <ContentStack.Screen name="profile" component={Profile} />,
+  },
+  {
+    name: 'support',
+    component: <ContentStack.Screen name="support" component={Support} />,
   },
 ];
 

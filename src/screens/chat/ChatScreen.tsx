@@ -5,7 +5,6 @@ import { ChatService } from '@mobile/services/chat-manager';
 import navigationService from '@mobile/services/navigationService';
 import * as MessageService from '@mobile/services/message';
 import Tony from '@mobile/assets/images/ic_logo_tony.svg';
-import * as Window from '@mobile/services/dimensionsService';
 
 import useReduxState from '@mobile/hooks/useReduxState';
 import * as S from './ChatScreen.style';
@@ -119,15 +118,12 @@ const ChatScreen: React.FC = () => {
           <S.IconArrow />
         </S.WrapperGoBack>
         <S.WrapperTony>
-          <S.TonyImage source={Tony} />
+          <Tony />
         </S.WrapperTony>
         <S.WrapperTonyInfo>
           <S.TonyName>Tony IA</S.TonyName>
           <S.TonyStatus>Online </S.TonyStatus>
         </S.WrapperTonyInfo>
-        <S.WrapperHelp>
-          <S.IconHelp />
-        </S.WrapperHelp>
       </S.WrapperHeader>
       <S.PageContainerView>
         <S.WrapperChat

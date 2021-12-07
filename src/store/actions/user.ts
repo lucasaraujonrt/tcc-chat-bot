@@ -24,7 +24,6 @@ export const getMe = () => async (dispatch: Dispatch) => {
       });
     }
   } catch (error) {
-    console.log('user get me', error);
     Analytics.trackEvent(`Error in getMe ${error}`, { ErrorEvent: error });
   } finally {
     dispatch(stopLoading());

@@ -19,6 +19,6 @@ export type LoadingState = {
 
 export type ReduxState = {
   auth: AuthState;
-  loading: LoadingState;
+  loading: number | boolean;
   user: UserState;
 };

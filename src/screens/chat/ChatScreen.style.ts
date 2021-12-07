@@ -184,8 +184,8 @@ export const ChatInput = styled.TextInput.attrs({
 export const WrapperSendButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })`
-  width: ${Window.widthScale(0.1)}px;
-  height: ${Window.heightScale(0.05)}px;
+  width: ${Window.widthScale(0.12)}px;
+  height: ${Window.heightScale(0.06)}px;
   background-color: ${color.second};
   border-radius: ${Window.winHeight * 0.025}px;
   margin-left: ${Window.widthScale(0.01)}px;

@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import User from '@mobile/assets/svg/home/ic_user.svg';
-import Status from '@mobile/assets/svg/home/ic_status.svg';
 import Form from '@mobile/assets/svg/home/ic_form.svg';
 import Support from '@mobile/assets/svg/home/ic_support.svg';
 
@@ -21,13 +20,13 @@ export const HomeFirstRow: Array<{
     id: HomeEnum.PROFILE,
     name: 'Perfil',
     icon: <User width={50} height={50} />,
-    navigation: 'user',
+    navigation: 'profile',
   },
   {
-    id: HomeEnum.STATUS,
-    name: 'Status',
-    icon: <Status width={50} height={50} />,
-    navigation: 'status',
+    id: HomeEnum.SUPPORT,
+    name: 'Suporte',
+    icon: <Support width={50} height={50} />,
+    navigation: 'support',
   },
 ];
 
@@ -41,7 +40,7 @@ export const HomeSecondRow: Array<{
     id: HomeEnum.FORM,
     name: 'Formulário',
     icon: <Form width={50} height={50} />,
-    navigation: 'form',
+    navigation: 'profile',
   },
   {
     id: HomeEnum.SUPPORT,

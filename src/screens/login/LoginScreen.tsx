@@ -15,14 +15,12 @@ import * as S from './LoginScreen.style';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
-  // const { loading } = useReduxState();
+  const { loading } = useReduxState();
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
     const validateEmail = EmailValidator.validate(email);
-    navigationService.reset({ index: 0, routes: [{ name: 'Content' }] });
 
     if (!validateEmail) {
       return MessageService.error('E-mail inválido');
@@ -81,7 +79,7 @@ const Login: React.FC = () => {
                 title="Entrar"
                 onPress={handleSubmit}
                 width={0.6}
-                disabled={loading}
+                disabled={loading > 0}
               />
             </S.WrapperForm>
           </S.SubContainer>

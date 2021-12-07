@@ -134,6 +134,9 @@ export const maskTime = (value: string | null | undefined) => {
 export const maskDateTime = (value: string) => {
   return value ? Masker.toPattern(value, '99/99/9999 99:99') : '';
 };
+export const maskCep = (value: string) => {
+  return value ? Masker.toPattern(value, '99999-999') : '';
+};
 
 export const maskCpfOrCnpj = (value: string) =>
   isCpf(value) ? maskCpf(value) : maskCnpj(value);

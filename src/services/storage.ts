@@ -19,6 +19,7 @@ export const setAuthTokens = async (
 export const deleteAuthTokens = async () => {
   await Storage.deleteItem('accessToken', options);
   await Storage.deleteItem('refreshToken', options);
+  await Storage.deleteItem('auth', options);
 };
 
 export const removeItem = async (key: string) => {

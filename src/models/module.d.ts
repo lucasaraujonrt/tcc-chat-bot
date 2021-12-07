@@ -22,6 +22,15 @@ export type MeResponse = {
   cellphone: string;
   profileType: number;
   firebaseToken: string;
+  address: string;
+  number: string;
+  cep: string;
+  district: string;
+  city: string;
+  uf: string;
+  createdAt: Date;
+  chatId: string;
+  id: string;
 };
 
 export type CreateChatType = {

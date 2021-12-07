@@ -5,6 +5,7 @@ import firebase from '@mobile/services/firebase-settings';
 import AuthApi from '@mobile/controllers/auth';
 import * as Storage from '@mobile/services/storage';
 import * as Message from '@mobile/services/message';
+import navigationService from '@mobile/services/navigationService';
 import { startLoading, stopLoading } from './loading';
 import {
   ACTION_AUTH_LOGIN,
@@ -17,8 +18,6 @@ export const loginFirebase = () => async (
   dispatch: Dispatch,
   getState: any
 ) => {
-  console.log('getState().user.me.email', getState().user.me.email);
-  console.log('getState().user.me.email', getState().user.me.id);
   dispatch(startLoading());
   try {
     const firebaseSignIn = await firebase
@@ -31,10 +30,8 @@ export const loginFirebase = () => async (
       type: ACTION_SET_FIREBASE_USER,
       payload: firebaseSignIn.user,
     });
-    console.log('firebaseSignIn', firebaseSignIn);
   } catch (error) {
     Analytics.trackEvent(`Error in firebase login`, { ErrorEvent: error });
-    console.log('loginFirebase', error);
   } finally {
     dispatch(stopLoading());
   }
@@ -111,4 +108,14 @@ export const checkLogin = () => async (dispatch: Dispatch<any>) => {
     dispatch(loginFirebase());
   }
   dispatch(stopLoading());
+};
+
+export const cleanAuth = () => async (dispatch: Dispatch) => {
+  await Storage.deleteAuthTokens();
+  await Storage.removeItem('auth');
+  dispatch({
+    type: ACTION_AUTH_LOGGED,
+    payload: false,
+  });
+  navigationService.reset({ index: 0, routes: [{ name: 'Start' }] });
 };
